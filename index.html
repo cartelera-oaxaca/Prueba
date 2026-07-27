@@ -1,120 +1,164 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>99 | Cartelera Oaxaca</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1, viewport-fit=cover">
+<title>99 | Cartelera Oaxaca HD</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800;900&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#f43f5e;--text:#f4f4f5}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#f43f5e}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif}
-.header{padding:14px;text-align:center;background:#09090b;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border)}
-.banner-rojo{background:linear-gradient(135deg,#f43f5e,#e11d48);color:#fff;text-align:center;padding:11px;font-weight:800;font-size:12px}
-.hero{width:min(900px,92vw);margin:26px auto 10px;text-align:center}
-.hero h1{font-family:'Outfit';font-size:clamp(24px,5vw,38px);line-height:1.1}
-#bannerG3{width:min(1200px,94vw);margin:0 auto 18px;border-radius:22px;overflow:hidden;border:1px solid var(--accent);aspect-ratio:16/6;background:#000;display:none}
-#bannerG3 img,#bannerG3 iframe,#bannerG3 video{width:100%;height:100%;object-fit:cover;display:block;border:0}
-#banner-intermedio{width:min(900px,92vw);margin:0 auto 18px;text-align:center;font-weight:800;font-size:13px;color:#fb7185;background:rgba(244,63,94,.1);border:1px dashed var(--accent);padding:10px;border-radius:12px;display:none}
-#btnCobertura{width:min(900px,92vw);margin:0 auto 18px;display:none;text-align:center}
-#btnCobertura a{background:#be185d;color:#fff;padding:12px 22px;border-radius:999px;font-weight:800;text-decoration:none;display:inline-block}
-.grid{width:min(1200px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:30px}
+html{background:var(--bg);height:100%}
+body{background:var(--bg);color:#fff;font-family:'Plus Jakarta Sans',sans-serif; min-height:100vh; min-height:100dvh; width:100%; overflow-x:hidden}
+.header{padding:12px;text-align:center;position:sticky;top:0;z-index:10;background:rgba(9,9,11,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.banner-rojo{background:#f43f5e;color:#fff;text-align:center;padding:11px;font-weight:800;font-size:12px;display:none}
+#banner-intermedio{width:min(900px,92vw);margin:10px auto;display:none;text-align:center;font-weight:800;font-size:13px;color:#fb7185;background:rgba(244,63,94,.1);border:1px dashed var(--accent);padding:10px;border-radius:12px}
+#espectacular{width:min(1200px,94vw);margin:10px auto;display:none;border-radius:20px;padding:3px;background:linear-gradient(90deg,#f43f5e,#fbbf24,#f43f5e)}
+#espectacular>div{background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/6}
+#espectacular img{width:100%;height:100%;object-fit:cover}
+#btnCobertura{width:min(900px,92vw);margin:10px auto;display:none;text-align:center}
+#btnCobertura a{background:#fff;color:#000;padding:13px 24px;border-radius:999px;font-weight:900;text-decoration:none;display:inline-block}
+.grid{width:min(1200px,94vw);margin:10px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-bottom:90px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}@media(min-width:1024px){.grid{grid-template-columns:repeat(5,1fr)}}
-.cuadro{aspect-ratio:1;border-radius:22px;background:var(--card);border:1px solid var(--border);position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.cuadro img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.n{position:absolute;top:8px;left:10px;font-size:9px;font-weight:800;background:rgba(0,0,0,.6);padding:3px 7px;border-radius:8px;z-index:3}
-/* BOTON AYUDA G8 */
-#btnAyudaG8{position:fixed;bottom:22px;right:22px;background:#facc15;color:#000;width:58px;height:58px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:900;font-size:28px;z-index:9998;cursor:pointer;box-shadow:0 0 20px rgba(250,204,21,.6);border:3px solid #000;animation:ayudaPulse 1.3s infinite}
-#btnAyudaG8 span{font-size:10px;position:absolute;bottom:-22px;background:#000;color:#facc15;padding:3px 8px;border-radius:8px;white-space:nowrap;font-weight:800}
-@keyframes ayudaPulse{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
-#modal,#helpModal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
-#box{background:var(--card);border:1px solid var(--border);border-radius:24px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;text-align:center}
-#helpBox{background:#18181b;border:2px solid #facc15;border-radius:20px;max-width:520px;width:100%;overflow:hidden;text-align:center;position:relative}
-#helpBox img{width:100%;height:auto;display:block;max-height:82vh;object-fit:contain;background:#000}
-.btn{width:100%;padding:13px;border-radius:12px;border:none;font-weight:800;margin-top:8px;cursor:pointer;display:flex;justify-content:center;gap:6px;text-decoration:none}
-.btn-rojo{background:var(--accent);color:#fff}.btn-gris{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border)}
-.comentarios{width:min(900px,92vw);margin:40px auto;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px}
-.comentarios textarea{width:100%;background:#000;border:1px solid var(--border);color:#fff;border-radius:10px;padding:10px;margin-top:10px}
+.cuadro{aspect-ratio:1;border-radius:18px;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer}
+.cuadro img.logo{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;top:19px;height:calc(100% - 19px)}
+.nombre-icono{position:absolute;top:0;left:0;right:0;height:19px;background:var(--accent);color:#fff;font-size:8px;font-weight:900;text-align:center;line-height:19px;z-index:3;overflow:hidden;white-space:nowrap}
+.n{position:absolute;top:22px;left:5px;font-size:8px;font-weight:800;background:rgba(0,0,0,.7);padding:3px 6px;border-radius:999px;z-index:4}
+.libre-center{position:absolute;inset:0;top:19px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#71717a}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:10px}
+#box{background:var(--card);border:1px solid var(--border);border-radius:22px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto}
+.btn{width:100%;padding:13px;border-radius:14px;border:none;font-weight:800;margin-top:8px;cursor:pointer;text-decoration:none;display:flex;justify-content:center}
+.btn-rojo{background:var(--accent);color:#fff}.btn-gris{background:#27272a;color:#fff}
+.like-bar{display:flex;gap:8px;margin:10px 0}
+.like-btn{flex:1;padding:10px;border-radius:999px;border:1px solid var(--border);background:#27272a;color:#fff;font-weight:800;font-size:12px;cursor:pointer}
+.like-btn.activo{background:#f43f5e}
+.coment-box{background:#09090b;border:1px solid var(--border);border-radius:12px;padding:8px;margin-top:8px}
+.coment-input{width:100%;background:transparent;border:none;color:#fff;outline:none;font-size:13px}
+
+/* BOTON AYUDA NUEVO */
+#btnAyuda{position:fixed;bottom:18px;right:18px;z-index:9000;background:#fff;color:#000;border:0;border-radius:999px;padding:14px 18px;font-weight:900;box-shadow:0 8px 30px rgba(0,0,0,.5);cursor:pointer;display:none}
+#modalAyuda{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;flex-direction:column;z-index:100000;padding:12px}
+#modalAyuda.activo{display:flex}
+#modalAyuda iframe{flex:1;width:100%;border:0;border-radius:16px;background:#fff}
 </style>
 </head>
 <body>
-<div class="header"><h2 id="txt-baner1">CARTELERA DIGITAL • OAXACA</h2></div>
-<div class="banner-rojo" id="txt-baner2" style="display:none"></div>
-<div class="hero"><h1 id="txt-titulo">Directorio <span style="color:#f43f5e">Negocios</span></h1></div>
-<div id="bannerG3"></div>
+<div class="header"><h2>CARTELERA DIGITAL • OAXACA</h2></div>
+<div class="banner-rojo" id="txt-baner2"></div>
+<h1 id="txt-titulo" style="font-family:Outfit;text-align:center;margin:18px 0;font-size:32px">Directorio <span style="color:#f43f5e">Negocios</span></h1>
 <div id="banner-intermedio"></div>
-<div id="btnCobertura"><a id="linkCobertura" href="#" target="_blank">📍 VER COBERTURA 8KM</a></div>
-<div class="grid" id="grid">Cargando...</div>
-<div class="comentarios"><h3>💬 Comentarios</h3><textarea id="comInput"></textarea><button class="btn btn-rojo" id="btnCom">Publicar</button><div id="listaCom" style="margin-top:12px"></div></div>
+<div id="espectacular"><div id="espCont"></div></div>
+<div id="btnCobertura"><a id="linkCobertura" target="_blank">📍 VER COBERTURA 8KM</a></div>
+<div class="grid" id="grid">Cargando HD...</div>
 <div id="modal"><div id="box"></div></div>
-<!-- MODAL AYUDA G8 -->
-<div id="helpModal"><div id="helpBox"><button style="position:absolute;top:10px;right:10px;background:#000;color:#fff;border:1px solid #333;width:36px;height:36px;border-radius:50%;font-weight:900;cursor:pointer;z-index:2" onclick="helpModal.style.display='none'">✕</button><img id="helpImg" src=""><div style="padding:12px"><div style="font-weight:800;color:#facc15">¿Necesitas ayuda?</div><button class="btn btn-gris" style="margin-top:10px" onclick="helpModal.style.display='none'">Cerrar</button></div></div></div>
-<!-- ICONO FLOTANTE G8 -->
-<div id="btnAyudaG8" onclick="if(window._ayudaUrl) openHelp(window._ayudaUrl)">?<span>¿Necesitas ayuda?</span></div>
+
+<!-- AYUDA G12 -->
+<button id="btnAyuda">❓ AYUDA</button>
+<div id="modalAyuda">
+  <div style="display:flex;gap:8px;margin-bottom:10px">
+    <button onclick="cerrarAyuda()" style="flex:1;background:#27272a;color:#fff;border:1px solid #3f3f46;padding:12px;border-radius:12px;font-weight:900">✕ CERRAR AYUDA</button>
+    <a id="abrirFuera" target="_blank" style="flex:1;background:#fff;color:#000;padding:12px;border-radius:12px;font-weight:900;text-align:center;text-decoration:none;display:none">Abrir fuera ↗</a>
+  </div>
+  <iframe id="visorAyuda" src=""></iframe>
+</div>
 
 <script>
 const SHEET_URL="https://docs.google.com/spreadsheets/d/1qoDyTeMp6Ex_Nbx-QG4fn1nq7g_4jtaDSkAQn1Dpv84/gviz/tq?tqx=out:csv";
-const WA="5215644276032";
-const isUrl=s=>{try{const u=new URL(String(s).trim());return u.protocol==='http:'||u.protocol==='https:'}catch{return false}};
-const isShow=v=>{ const t=String(v||'').trim(); if(!t) return false; if(t.toLowerCase()==='false') return false; return true; };
-function parseCSV(t){const rows=[];let curRow=[];let cur="";let inQ=false;for(let i=0;i<t.length;i++){const c=t[i],n=t[i+1];if(c=='"'){if(inQ&&n=='"'){cur+='"';i++;}else inQ=!inQ;}else if(c==','&&!inQ){curRow.push(cur.trim());cur="";}else if((c=='\n'||c=='\r')&&!inQ){if(cur||curRow.length){curRow.push(cur.trim());rows.push(curRow);curRow=[];cur="";}if(c=='\r'&&n=='\n')i++;}else cur+=c;}if(cur||curRow.length){curRow.push(cur.trim());rows.push(curRow);}return rows.filter(r=>r.some(v=>v));}
-function hd(u){ if(!u) return ''; try{ return `https://wsrv.nl/?url=${encodeURIComponent(u.trim())}&w=500&h=500&fit=cover&output=webp`; }catch{return u;} }
-function getLikes(){return JSON.parse(localStorage.getItem('likes99')||'{}');}
-function setLikeModal(num,type){ let l=getLikes(); if(!l[num]) l[num]={like:0,dislike:0}; l[num][type]++; localStorage.setItem('likes99',JSON.stringify(l)); const el=document.getElementById('ml-'+type); if(el) el.textContent=(type==='like'?'👍 ':'👎 ')+l[num][type]; }
-function guardarCom(){ const v=document.getElementById('comInput').value.trim(); if(!v) return; let c=JSON.parse(localStorage.getItem('com99')||'[]'); c.unshift({t:v,f:new Date().toLocaleString()}); localStorage.setItem('com99',JSON.stringify(c)); document.getElementById('comInput').value=''; pintarCom(); }
-function pintarCom(){ const c=JSON.parse(localStorage.getItem('com99')||'[]'); document.getElementById('listaCom').innerHTML=c.map(x=>`<div style="border-bottom:1px solid #27272a;padding:8px 0"><small style="color:#a1a1aa">${x.f}</small><div>${x.t}</div></div>`).join(''); }
-function openHelp(url){ document.getElementById('helpImg').src=url; document.getElementById('helpModal').style.display='flex'; }
-
+const WA_BASE="5215644276032";
+const isUrl=s=>{try{if(!s) return false;const u=new URL(String(s).trim());return u.protocol.startsWith('http')&&String(s).length>8}catch{return false}};
+const isShow=v=>{const t=String(v||'').trim();if(!t) return false;if(t.toLowerCase()==='false'||t.toLowerCase()==='0'||t.toLowerCase()==='null') return false;return true;}
+function toHD(u){if(!u) return ''; let s=String(u).trim(); if(s.includes('drive.google.com')){const m=s.match(/\/d\/([a-zA-Z0-9_-]+)/)||s.match(/id=([a-zA-Z0-9_-]+)/); if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;} return s;}
+function parseCSV(t){const rows=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i],nx=t[i+1];if(ch=='"'){if(q&&nx=='"'){c+='"';i++;}else q=!q;}else if(ch==','&&!q){r.push(c.trim());c='';}else if((ch=='\n'||ch=='\r')&&!q){if(c||r.length){r.push(c.trim());rows.push(r);r=[];c='';}if(ch=='\r'&&nx=='\n')i++;}else c+=ch;}if(c||r.length){r.push(c.trim());rows.push(r);}return rows.filter(x=>x.some(v=>v));}
+let TODOS=[]; let HELP_URL="";
 async function cargar(){
- const grid=document.getElementById('grid'); let datos={}; let ledActive=false;
- try{
-  const r=await fetch(SHEET_URL+'&cb='+Date.now(),{cache:'no-store'}); const t=await r.text(); const all=parseCSV(t);
-  const G2=(all[1]?.[6]||'').trim(), G3=(all[2]?.[6]||'').trim(), G4=(all[3]?.[6]||'').trim(), G5=(all[4]?.[6]||'').trim(), G6=(all[5]?.[6]||'').trim(), G7=(all[6]?.[6]||'').trim(), G8=(all[7]?.[6]||'').trim(), G9=(all[8]?.[6]||'').trim(), G10=(all[9]?.[6]||'').trim();
+ const res=await fetch(SHEET_URL+'&cb='+Date.now(),{cache:'no-store'});const txt=await res.text();const all=parseCSV(txt);
+ const G2=(all[1]?.[6]||'').trim(), G3=(all[2]?.[6]||'').trim(), G4=(all[3]?.[6]||'').trim(), G5=(all[4]?.[6]||'').trim(), G6=(all[5]?.[6]||'').trim(), G7=(all[6]?.[6]||'').trim();
+ const G12=(all[11]?.[6]||'').trim(); // <-- AQUI ESTA TU G12 MAY, NO TOQUE LA L
 
-  if(isShow(G2)){ const b=document.getElementById('txt-baner2'); b.textContent=G2; b.style.display='block'; }
-  if(isShow(G10)){ document.getElementById('txt-baner1').textContent=G10; }
-  if(isShow(G9)){ document.getElementById('txt-titulo').textContent=G9; }
-  if(isShow(G4)){ const b=document.getElementById('banner-intermedio'); b.textContent=G4; b.style.display='block'; }
-  ledActive = String(G5).toLowerCase().includes('true');
-  if(isShow(G6)){ const btn=document.getElementById('btnCobertura'); document.getElementById('linkCobertura').href = isUrl(G6)?G6:'#'; btn.style.display='block'; }
-
-  // >>> LOGICA G8 AYUDA <<<
-  if(isShow(G8) && isUrl(G8)){
-    window._ayudaUrl = G8;
-    document.getElementById('btnAyudaG8').style.display='flex';
-  }
-
-  if(isShow(G3) && isUrl(G3)){
-    const b3=document.getElementById('bannerG3'); b3.style.display='block';
-    if(G3.includes('youtube')||G3.includes('youtu.be')){ let id=G3; if(id.includes('watch?v=')) id=id.split('watch?v=')[1].split('&')[0]; if(id.includes('youtu.be/')) id=id.split('youtu.be/')[1].split('?')[0]; b3.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`; }
-    else if(G3.match(/\.(mp4|webm)$/i)){ b3.innerHTML=`<video src="${G3}" autoplay muted loop playsinline controls></video>`; }
-    else{ b3.innerHTML=`<img src="${hd(G3)}" onerror="this.src='${G3}'">`; b3.onclick=()=>window.open(G3,'_blank'); }
-  }
-
-  for(const cols of all.slice(1)){
-   const n=parseInt(cols[0]); if(isNaN(n)) continue;
-   const logourl=cols[1]?.trim(), clickurl=cols[2]?.trim(), dirijirurl=cols[3]?.trim(), dirijirwhatsapp=cols[4]?.trim(), tituloDentro=cols[5]?.trim();
-   const banerlogoextra=cols[7]?.trim(), ubicacion=cols[8]?.trim(), banerlogoextra2=cols[9]?.trim(), categoria=cols[10]?.trim(), cupon=cols[11]?.trim(), tituloclick=cols[12]?.trim(), urlimgpromonegocio=cols[13]?.trim();
-   if(!logourl &&!clickurl &&!dirijirurl) continue;
-   datos[n]={logo:isUrl(logourl)?logourl:'',clickImg:isUrl(clickurl)?clickurl:'',dir:isUrl(dirijirurl)?dirijirurl:'',wa:dirijirwhatsapp||'',titulo:tituloDentro||'SOCIO',banExtra:isUrl(banerlogoextra)?banerlogoextra:'',ubi:ubicacion||'',banExtra2:isUrl(banerlogoextra2)?banerlogoextra2:'',cat:categoria||'',cupon:cupon||'',titClick:tituloclick||'',imgPromo:isUrl(urlimgpromonegocio)?urlimgpromonegocio:''};
-  }
- }catch(e){ console.error(e); }
- const frag=document.createDocumentFragment();
- for(let i=1;i<=99;i++){
-  const inf=datos[i]; const ocup=!!inf;
-  const div=document.createElement('div'); div.className='cuadro'+(ocup && ledActive && (i%2===1)?' led':'');
-  div.innerHTML=`<div class="n">#${String(i).padStart(3,'0')}</div>${ocup&&inf.logo?`<img src="${hd(inf.logo)}" loading="lazy" onerror="this.onerror=null;this.src='${inf.logo}'">`:`<div style="text-align:center;z-index:2">${ocup?inf.titulo.slice(0,12):'💎<br>LIBRE'}</div>`}`;
-  div.onclick=()=>{
-   const box=document.getElementById('box'); const modal=document.getElementById('modal'); const likes=getLikes()[i]||{like:0,dislike:0};
-   if(!ocup){ box.innerHTML=`<div style="padding:18px"><h3>ESPACIO #${i} LIBRE</h3><button class="btn btn-rojo" onclick="window.open('https://wa.me/${WA}?text=Quiero%20cuadro%20${i}','_blank')">RESERVAR #${i}</button><button class="btn btn-gris" onclick="document.getElementById('modal').style.display='none'">Cerrar</button></div>`; }
-   else{ box.innerHTML=`<div style="padding:14px"><div style="display:flex;flex-direction:column;gap:8px">${inf.banExtra?`<img src="${hd(inf.banExtra)}" style="width:100%;height:80px;object-fit:cover;border-radius:10px">`:''}${inf.banExtra2?`<img src="${hd(inf.banExtra2)}" style="width:100%;height:80px;object-fit:cover;border-radius:10px">`:''}${inf.imgPromo?`<img src="${hd(inf.imgPromo)}" style="width:100%;height:120px;object-fit:cover;border-radius:10px">`:''}${inf.clickImg?`<img src="${hd(inf.clickImg)}" style="width:100%;height:160px;object-fit:cover;border-radius:10px">`:''}</div><h3 style="margin-top:10px">${inf.titulo}</h3><small>${inf.cat}</small>${inf.titClick?`<div style="background:#3b82f6;color:#fff;padding:6px;border-radius:8px;font-weight:800;margin-top:8px">${inf.titClick}</div>`:''}<div style="display:flex;gap:8px;margin-top:12px"><button id="ml-like" class="btn" style="background:#27272a;color:#fff" onclick="setLikeModal(${i},'like')">👍 ${likes.like}</button><button id="ml-dislike" class="btn" style="background:#27272a;color:#fff" onclick="setLikeModal(${i},'dislike')">👎 ${likes.dislike}</button></div><button class="btn btn-rojo" onclick="window.open('${inf.dir||`https://wa.me/${WA}`}','_blank')">IR AL NEGOCIO</button>${inf.wa?`<button class="btn" style="background:#22c55e;color:#fff" onclick="window.open('https://wa.me/${inf.wa.replace(/[^0-9]/g,'')}','_blank')">WhatsApp</button>`:''}${inf.ubi?`<a class="btn" style="background:#0ea5e9;color:#fff" href="${inf.ubi}" target="_blank">📍 Ubicación</a>`:''}${inf.cupon?`<div style="margin-top:10px;border:1px dashed #f43f5e;padding:8px;border-radius:10px">🎟️ ${inf.cupon}</div>`:''}<button class="btn btn-gris" onclick="document.getElementById('modal').style.display='none'">Cerrar</button></div>`; }
-   modal.style.display='flex';
-  }; frag.appendChild(div);
+ if(isShow(G2)){const b=document.getElementById('txt-baner2');b.textContent=G2;b.style.display='block';}
+ if(isShow(G3)) document.getElementById('txt-titulo').innerHTML=G3.includes('<')?G3:`${G3} <span style="color:#f43f5e"></span>`;
+ if(isShow(G4)){const b=document.getElementById('banner-intermedio');b.textContent=G4;b.style.display='block';}
+ if(isUrl(G6)){document.getElementById('btnCobertura').style.display='block';document.getElementById('linkCobertura').href=G6;}
+ else if(isShow(G6)&&G6.toLowerCase().includes('true')){document.getElementById('btnCobertura').style.display='block';document.getElementById('linkCobertura').href='https://coberturaoaxacacartelera.netlify.app/';}
+ if(isShow(G7)&&isUrl(toHD(G7))){
+  const esp=document.getElementById('espectacular');const cont=document.getElementById('espCont');esp.style.display='block';
+  cont.innerHTML=`<img src="${toHD(G7)}" loading="eager">`;
  }
- grid.innerHTML=''; grid.appendChild(frag); pintarCom();
+ // LOGICA G12 - BOTON AYUDA
+ if(isUrl(G12)){
+   HELP_URL = G12;
+   document.getElementById('btnAyuda').style.display='block';
+   document.getElementById('abrirFuera').href = G12;
+   document.getElementById('abrirFuera').style.display='block';
+ }
+
+ for(const cols of all.slice(1)){
+  const n=parseInt(cols[0]);if(isNaN(n))continue;
+  const B=cols[1]?.trim(),C=cols[2]?.trim(),D=cols[3]?.trim(),E=cols[4]?.trim(),F=cols[5]?.trim();
+  const J=cols[9]?.trim(),K=cols[10]?.trim(),L=cols[11]?.trim(),M=cols[12]?.trim(),N=cols[13]?.trim(),O=cols[14]?.trim(),P=cols[15]?.trim();
+  if(!B&&!C)continue;
+  TODOS.push({n,logo:toHD(B),clickImg:toHD(C),dir:D,wa:E,titulo:F||'SOCIO',banJ:isUrl(toHD(J))?toHD(J):'',banK:isUrl(toHD(K))?toHD(K):'',ubi:L,banM:isUrl(toHD(M))?toHD(M):'',cat:N||'',cupon:O,lugarTxt:P});
+ }
+ pintar(TODOS);
 }
-document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal') e.currentTarget.style.display='none'; });
-document.getElementById('helpModal').addEventListener('click',e=>{ if(e.target.id==='helpModal') e.currentTarget.style.display='none'; });
-document.getElementById('btnCom').addEventListener('click',guardarCom);
+function pintar(lista){
+ const grid=document.getElementById('grid');grid.innerHTML='';const frag=document.createDocumentFragment();
+ for(let i=1;i<=99;i++){
+  const inf=lista.find(x=>x.n===i);const div=document.createElement('div');div.className='cuadro';
+  if(inf){div.innerHTML=`<div class="nombre-icono">${inf.titulo.slice(0,20).toUpperCase()}</div><div class="n">#${String(i).padStart(3,'0')}</div><img class="logo" src="${inf.logo}" loading="${i<12?'eager':'lazy'}" decoding="async">`;}
+  else{div.innerHTML=`<div class="nombre-icono" style="background:#27272a">LIBRE</div><div class="n">#${String(i).padStart(3,'0')}</div><div class="libre-center">💎 LIBRE</div>`;}
+  div.onclick=()=>abrirModal(i,inf);frag.appendChild(div);
+ }
+ grid.appendChild(frag);
+}
+function getLikes(n){return JSON.parse(localStorage.getItem('likes_'+n)||'{"like":0,"encanta":0,"my":null}');}
+function setLike(n,tipo){
+ let d=getLikes(n); if(d.my===tipo){d[tipo]--;d.my=null;}else{if(d.my){d[d.my]--;}d[tipo]++;d.my=tipo;} localStorage.setItem('likes_'+n,JSON.stringify(d)); abrirModal(n,TODOS.find(x=>x.n===n));
+}
+function addComent(n){
+ const input=document.getElementById('cInput');const txt=input.value.trim();if(!txt)return;
+ let com=JSON.parse(localStorage.getItem('com_'+n)||'[]');com.push({t:txt, f:new Date().toLocaleDateString()});localStorage.setItem('com_'+n,JSON.stringify(com));abrirModal(n,TODOS.find(x=>x.n===n));
+}
+function abrirModal(num,inf){
+ const box=document.getElementById('box');const modal=document.getElementById('modal');
+ if(!inf){box.innerHTML=`<div style="padding:22px;text-align:center"><h2>#${num} LIBRE</h2><a class="btn btn-rojo" href="https://wa.me/${WA_BASE}?text=Quiero%20cuadro%20${num}" target="_blank">RESERVAR</a><button class="btn btn-gris" onclick="modal.style.display='none'">Cerrar</button></div>`;modal.style.display='flex';return;}
+ const likes=getLikes(num); const coments=JSON.parse(localStorage.getItem('com_'+num)||'[]');
+ box.innerHTML=`<div style="padding:12px;text-align:center">
+  ${inf.banJ?`<img src="${inf.banJ}" style="width:100%;height:70px;object-fit:cover;border-radius:12px;margin-bottom:6px">`:''}
+  ${inf.banK?`<img src="${inf.banK}" style="width:100%;height:70px;object-fit:cover;border-radius:12px;margin-bottom:6px">`:''}
+  <div style="display:flex;gap:6px;justify-content:center;margin:6px 0">${inf.lugarTxt?`<span style="background:#18181b;border:1px solid #27272a;padding:5px 10px;border-radius:999px;font-size:11px">📍 ${inf.lugarTxt}</span>`:''}${inf.cat?`<span style="background:#f43f5e;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800">🏷️ ${inf.cat}</span>`:''}</div>
+  ${inf.clickImg?`<img src="${inf.clickImg}" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:18px">`:''}
+  <h3 style="margin:10px 0">${inf.titulo}</h3>
+  <div class="like-bar">
+   <button class="like-btn ${likes.my==='like'?'activo':''}" onclick="setLike(${num},'like')">👍 Me gusta ${likes.like||''}</button>
+   <button class="like-btn ${likes.my==='encanta'?'activo':''}" onclick="setLike(${num},'encanta')">❤️ Encanta ${likes.encanta||''}</button>
+  </div>
+  ${inf.banM?`<img src="${inf.banM}" style="width:100%;height:80px;object-fit:cover;border-radius:12px;margin:8px 0">`:''}
+  ${inf.cupon?`<div style="border:1px dashed #f43f5e;padding:10px;border-radius:12px;background:rgba(244,63,94,.1);font-weight:800;font-size:13px">🎟️ ${inf.cupon}</div>`:''}
+  ${inf.dir?`<a class="btn btn-rojo" href="${inf.dir}" target="_blank">IR AL NEGOCIO</a>`:''}
+  ${inf.wa?`<a class="btn" style="background:#22c55e;color:#fff" href="https://wa.me/52${inf.wa.replace(/[^0-9]/g,'').slice(-10)}" target="_blank">WhatsApp Directo</a>`:''}
+  ${inf.ubi?`<a class="btn" style="background:#0ea5e9;color:#fff" href="${inf.ubi}" target="_blank">📍 Ubicación</a>`:''}
+  <div style="text-align:left;margin-top:14px"><b style="font-size:13px">💬 Comentarios (${coments.length})</b>
+   ${coments.map(c=>`<div style="background:#09090b;border:1px solid #27272a;padding:8px;border-radius:10px;margin-top:6px;font-size:12px"><b>Cliente:</b> ${c.t}<br><span style="font-size:10px;color:#71717a">${c.f}</span></div>`).join('')}
+   <div class="coment-box"><input id="cInput" class="coment-input" placeholder="Escribe un comentario bueno..."><button onclick="addComent(${num})" style="margin-top:6px;background:#f43f5e;color:#fff;border:none;padding:6px 12px;border-radius:999px;font-weight:800;font-size:11px">Publicar</button></div>
+  </div>
+  <button class="btn btn-gris" onclick="document.getElementById('modal').style.display='none'">Cerrar</button>
+ </div>`;
+ modal.style.display='flex';
+}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')e.currentTarget.style.display='none';});
+
+function abrirAyuda(){
+ if(!HELP_URL) return;
+ document.getElementById('visorAyuda').src = HELP_URL;
+ document.getElementById('modalAyuda').classList.add('activo');
+}
+function cerrarAyuda(){
+ document.getElementById('modalAyuda').classList.remove('activo');
+ document.getElementById('visorAyuda').src = "";
+}
+document.getElementById('btnAyuda').onclick = abrirAyuda;
+document.getElementById('modalAyuda').addEventListener('click',e=>{ if(e.target.id==='modalAyuda') cerrarAyuda(); });
+
 cargar();
 </script>
 </body>
