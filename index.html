@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>99 | Cartelera Oaxaca</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#f43f5e;--text:#f4f4f5}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif}
+.header{padding:14px;text-align:center;background:#09090b;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border)}
+.banner-rojo{background:linear-gradient(135deg,#f43f5e,#e11d48);color:#fff;text-align:center;padding:11px;font-weight:800;font-size:12px}
+.hero{width:min(900px,92vw);margin:26px auto 10px;text-align:center}
+.hero h1{font-family:'Outfit';font-size:clamp(24px,5vw,38px);line-height:1.1}
+#bannerG3{width:min(1200px,94vw);margin:0 auto 18px;border-radius:22px;overflow:hidden;border:1px solid var(--accent);aspect-ratio:16/6;background:#000;display:none}
+#bannerG3 img,#bannerG3 iframe,#bannerG3 video{width:100%;height:100%;object-fit:cover;display:block;border:0}
+#banner-intermedio{width:min(900px,92vw);margin:0 auto 18px;text-align:center;font-weight:800;font-size:13px;color:#fb7185;background:rgba(244,63,94,.1);border:1px dashed var(--accent);padding:10px;border-radius:12px;display:none}
+#btnCobertura{width:min(900px,92vw);margin:0 auto 18px;display:none;text-align:center}
+#btnCobertura a{background:#be185d;color:#fff;padding:12px 22px;border-radius:999px;font-weight:800;text-decoration:none;display:inline-block}
+.grid{width:min(1200px,94vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:30px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}@media(min-width:1024px){.grid{grid-template-columns:repeat(5,1fr)}}
+.cuadro{aspect-ratio:1;border-radius:22px;background:var(--card);border:1px solid var(--border);position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cuadro img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.n{position:absolute;top:8px;left:10px;font-size:9px;font-weight:800;background:rgba(0,0,0,.6);padding:3px 7px;border-radius:8px;z-index:3}
+/* BOTON AYUDA G8 */
+#btnAyudaG8{position:fixed;bottom:22px;right:22px;background:#facc15;color:#000;width:58px;height:58px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:900;font-size:28px;z-index:9998;cursor:pointer;box-shadow:0 0 20px rgba(250,204,21,.6);border:3px solid #000;animation:ayudaPulse 1.3s infinite}
+#btnAyudaG8 span{font-size:10px;position:absolute;bottom:-22px;background:#000;color:#facc15;padding:3px 8px;border-radius:8px;white-space:nowrap;font-weight:800}
+@keyframes ayudaPulse{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+#modal,#helpModal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
+#box{background:var(--card);border:1px solid var(--border);border-radius:24px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;text-align:center}
+#helpBox{background:#18181b;border:2px solid #facc15;border-radius:20px;max-width:520px;width:100%;overflow:hidden;text-align:center;position:relative}
+#helpBox img{width:100%;height:auto;display:block;max-height:82vh;object-fit:contain;background:#000}
+.btn{width:100%;padding:13px;border-radius:12px;border:none;font-weight:800;margin-top:8px;cursor:pointer;display:flex;justify-content:center;gap:6px;text-decoration:none}
+.btn-rojo{background:var(--accent);color:#fff}.btn-gris{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border)}
+.comentarios{width:min(900px,92vw);margin:40px auto;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px}
+.comentarios textarea{width:100%;background:#000;border:1px solid var(--border);color:#fff;border-radius:10px;padding:10px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="header"><h2 id="txt-baner1">CARTELERA DIGITAL • OAXACA</h2></div>
+<div class="banner-rojo" id="txt-baner2" style="display:none"></div>
+<div class="hero"><h1 id="txt-titulo">Directorio <span style="color:#f43f5e">Negocios</span></h1></div>
+<div id="bannerG3"></div>
+<div id="banner-intermedio"></div>
+<div id="btnCobertura"><a id="linkCobertura" href="#" target="_blank">📍 VER COBERTURA 8KM</a></div>
+<div class="grid" id="grid">Cargando...</div>
+<div class="comentarios"><h3>💬 Comentarios</h3><textarea id="comInput"></textarea><button class="btn btn-rojo" id="btnCom">Publicar</button><div id="listaCom" style="margin-top:12px"></div></div>
+<div id="modal"><div id="box"></div></div>
+<!-- MODAL AYUDA G8 -->
+<div id="helpModal"><div id="helpBox"><button style="position:absolute;top:10px;right:10px;background:#000;color:#fff;border:1px solid #333;width:36px;height:36px;border-radius:50%;font-weight:900;cursor:pointer;z-index:2" onclick="helpModal.style.display='none'">✕</button><img id="helpImg" src=""><div style="padding:12px"><div style="font-weight:800;color:#facc15">¿Necesitas ayuda?</div><button class="btn btn-gris" style="margin-top:10px" onclick="helpModal.style.display='none'">Cerrar</button></div></div></div>
+<!-- ICONO FLOTANTE G8 -->
+<div id="btnAyudaG8" onclick="if(window._ayudaUrl) openHelp(window._ayudaUrl)">?<span>¿Necesitas ayuda?</span></div>
+
+<script>
+const SHEET_URL="https://docs.google.com/spreadsheets/d/1qoDyTeMp6Ex_Nbx-QG4fn1nq7g_4jtaDSkAQn1Dpv84/gviz/tq?tqx=out:csv";
+const WA="5215644276032";
+const isUrl=s=>{try{const u=new URL(String(s).trim());return u.protocol==='http:'||u.protocol==='https:'}catch{return false}};
+const isShow=v=>{ const t=String(v||'').trim(); if(!t) return false; if(t.toLowerCase()==='false') return false; return true; };
+function parseCSV(t){const rows=[];let curRow=[];let cur="";let inQ=false;for(let i=0;i<t.length;i++){const c=t[i],n=t[i+1];if(c=='"'){if(inQ&&n=='"'){cur+='"';i++;}else inQ=!inQ;}else if(c==','&&!inQ){curRow.push(cur.trim());cur="";}else if((c=='\n'||c=='\r')&&!inQ){if(cur||curRow.length){curRow.push(cur.trim());rows.push(curRow);curRow=[];cur="";}if(c=='\r'&&n=='\n')i++;}else cur+=c;}if(cur||curRow.length){curRow.push(cur.trim());rows.push(curRow);}return rows.filter(r=>r.some(v=>v));}
+function hd(u){ if(!u) return ''; try{ return `https://wsrv.nl/?url=${encodeURIComponent(u.trim())}&w=500&h=500&fit=cover&output=webp`; }catch{return u;} }
+function getLikes(){return JSON.parse(localStorage.getItem('likes99')||'{}');}
+function setLikeModal(num,type){ let l=getLikes(); if(!l[num]) l[num]={like:0,dislike:0}; l[num][type]++; localStorage.setItem('likes99',JSON.stringify(l)); const el=document.getElementById('ml-'+type); if(el) el.textContent=(type==='like'?'👍 ':'👎 ')+l[num][type]; }
+function guardarCom(){ const v=document.getElementById('comInput').value.trim(); if(!v) return; let c=JSON.parse(localStorage.getItem('com99')||'[]'); c.unshift({t:v,f:new Date().toLocaleString()}); localStorage.setItem('com99',JSON.stringify(c)); document.getElementById('comInput').value=''; pintarCom(); }
+function pintarCom(){ const c=JSON.parse(localStorage.getItem('com99')||'[]'); document.getElementById('listaCom').innerHTML=c.map(x=>`<div style="border-bottom:1px solid #27272a;padding:8px 0"><small style="color:#a1a1aa">${x.f}</small><div>${x.t}</div></div>`).join(''); }
+function openHelp(url){ document.getElementById('helpImg').src=url; document.getElementById('helpModal').style.display='flex'; }
+
+async function cargar(){
+ const grid=document.getElementById('grid'); let datos={}; let ledActive=false;
+ try{
+  const r=await fetch(SHEET_URL+'&cb='+Date.now(),{cache:'no-store'}); const t=await r.text(); const all=parseCSV(t);
+  const G2=(all[1]?.[6]||'').trim(), G3=(all[2]?.[6]||'').trim(), G4=(all[3]?.[6]||'').trim(), G5=(all[4]?.[6]||'').trim(), G6=(all[5]?.[6]||'').trim(), G7=(all[6]?.[6]||'').trim(), G8=(all[7]?.[6]||'').trim(), G9=(all[8]?.[6]||'').trim(), G10=(all[9]?.[6]||'').trim();
+
+  if(isShow(G2)){ const b=document.getElementById('txt-baner2'); b.textContent=G2; b.style.display='block'; }
+  if(isShow(G10)){ document.getElementById('txt-baner1').textContent=G10; }
+  if(isShow(G9)){ document.getElementById('txt-titulo').textContent=G9; }
+  if(isShow(G4)){ const b=document.getElementById('banner-intermedio'); b.textContent=G4; b.style.display='block'; }
+  ledActive = String(G5).toLowerCase().includes('true');
+  if(isShow(G6)){ const btn=document.getElementById('btnCobertura'); document.getElementById('linkCobertura').href = isUrl(G6)?G6:'#'; btn.style.display='block'; }
+
+  // >>> LOGICA G8 AYUDA <<<
+  if(isShow(G8) && isUrl(G8)){
+    window._ayudaUrl = G8;
+    document.getElementById('btnAyudaG8').style.display='flex';
+  }
+
+  if(isShow(G3) && isUrl(G3)){
+    const b3=document.getElementById('bannerG3'); b3.style.display='block';
+    if(G3.includes('youtube')||G3.includes('youtu.be')){ let id=G3; if(id.includes('watch?v=')) id=id.split('watch?v=')[1].split('&')[0]; if(id.includes('youtu.be/')) id=id.split('youtu.be/')[1].split('?')[0]; b3.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`; }
+    else if(G3.match(/\.(mp4|webm)$/i)){ b3.innerHTML=`<video src="${G3}" autoplay muted loop playsinline controls></video>`; }
+    else{ b3.innerHTML=`<img src="${hd(G3)}" onerror="this.src='${G3}'">`; b3.onclick=()=>window.open(G3,'_blank'); }
+  }
+
+  for(const cols of all.slice(1)){
+   const n=parseInt(cols[0]); if(isNaN(n)) continue;
+   const logourl=cols[1]?.trim(), clickurl=cols[2]?.trim(), dirijirurl=cols[3]?.trim(), dirijirwhatsapp=cols[4]?.trim(), tituloDentro=cols[5]?.trim();
+   const banerlogoextra=cols[7]?.trim(), ubicacion=cols[8]?.trim(), banerlogoextra2=cols[9]?.trim(), categoria=cols[10]?.trim(), cupon=cols[11]?.trim(), tituloclick=cols[12]?.trim(), urlimgpromonegocio=cols[13]?.trim();
+   if(!logourl &&!clickurl &&!dirijirurl) continue;
+   datos[n]={logo:isUrl(logourl)?logourl:'',clickImg:isUrl(clickurl)?clickurl:'',dir:isUrl(dirijirurl)?dirijirurl:'',wa:dirijirwhatsapp||'',titulo:tituloDentro||'SOCIO',banExtra:isUrl(banerlogoextra)?banerlogoextra:'',ubi:ubicacion||'',banExtra2:isUrl(banerlogoextra2)?banerlogoextra2:'',cat:categoria||'',cupon:cupon||'',titClick:tituloclick||'',imgPromo:isUrl(urlimgpromonegocio)?urlimgpromonegocio:''};
+  }
+ }catch(e){ console.error(e); }
+ const frag=document.createDocumentFragment();
+ for(let i=1;i<=99;i++){
+  const inf=datos[i]; const ocup=!!inf;
+  const div=document.createElement('div'); div.className='cuadro'+(ocup && ledActive && (i%2===1)?' led':'');
+  div.innerHTML=`<div class="n">#${String(i).padStart(3,'0')}</div>${ocup&&inf.logo?`<img src="${hd(inf.logo)}" loading="lazy" onerror="this.onerror=null;this.src='${inf.logo}'">`:`<div style="text-align:center;z-index:2">${ocup?inf.titulo.slice(0,12):'💎<br>LIBRE'}</div>`}`;
+  div.onclick=()=>{
+   const box=document.getElementById('box'); const modal=document.getElementById('modal'); const likes=getLikes()[i]||{like:0,dislike:0};
+   if(!ocup){ box.innerHTML=`<div style="padding:18px"><h3>ESPACIO #${i} LIBRE</h3><button class="btn btn-rojo" onclick="window.open('https://wa.me/${WA}?text=Quiero%20cuadro%20${i}','_blank')">RESERVAR #${i}</button><button class="btn btn-gris" onclick="document.getElementById('modal').style.display='none'">Cerrar</button></div>`; }
+   else{ box.innerHTML=`<div style="padding:14px"><div style="display:flex;flex-direction:column;gap:8px">${inf.banExtra?`<img src="${hd(inf.banExtra)}" style="width:100%;height:80px;object-fit:cover;border-radius:10px">`:''}${inf.banExtra2?`<img src="${hd(inf.banExtra2)}" style="width:100%;height:80px;object-fit:cover;border-radius:10px">`:''}${inf.imgPromo?`<img src="${hd(inf.imgPromo)}" style="width:100%;height:120px;object-fit:cover;border-radius:10px">`:''}${inf.clickImg?`<img src="${hd(inf.clickImg)}" style="width:100%;height:160px;object-fit:cover;border-radius:10px">`:''}</div><h3 style="margin-top:10px">${inf.titulo}</h3><small>${inf.cat}</small>${inf.titClick?`<div style="background:#3b82f6;color:#fff;padding:6px;border-radius:8px;font-weight:800;margin-top:8px">${inf.titClick}</div>`:''}<div style="display:flex;gap:8px;margin-top:12px"><button id="ml-like" class="btn" style="background:#27272a;color:#fff" onclick="setLikeModal(${i},'like')">👍 ${likes.like}</button><button id="ml-dislike" class="btn" style="background:#27272a;color:#fff" onclick="setLikeModal(${i},'dislike')">👎 ${likes.dislike}</button></div><button class="btn btn-rojo" onclick="window.open('${inf.dir||`https://wa.me/${WA}`}','_blank')">IR AL NEGOCIO</button>${inf.wa?`<button class="btn" style="background:#22c55e;color:#fff" onclick="window.open('https://wa.me/${inf.wa.replace(/[^0-9]/g,'')}','_blank')">WhatsApp</button>`:''}${inf.ubi?`<a class="btn" style="background:#0ea5e9;color:#fff" href="${inf.ubi}" target="_blank">📍 Ubicación</a>`:''}${inf.cupon?`<div style="margin-top:10px;border:1px dashed #f43f5e;padding:8px;border-radius:10px">🎟️ ${inf.cupon}</div>`:''}<button class="btn btn-gris" onclick="document.getElementById('modal').style.display='none'">Cerrar</button></div>`; }
+   modal.style.display='flex';
+  }; frag.appendChild(div);
+ }
+ grid.innerHTML=''; grid.appendChild(frag); pintarCom();
+}
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal') e.currentTarget.style.display='none'; });
+document.getElementById('helpModal').addEventListener('click',e=>{ if(e.target.id==='helpModal') e.currentTarget.style.display='none'; });
+document.getElementById('btnCom').addEventListener('click',guardarCom);
+cargar();
+</script>
+</body>
+</html>
