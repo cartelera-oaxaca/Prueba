@@ -50,7 +50,10 @@ body{background:#121212;color:#fff}
 </div>
 <div id="items" style="flex:1;overflow:auto;padding:10px"></div>
 <div style="padding:12px;border-top:1px solid #2c2c2c;background:#121212">
-<b style="font-size:13px;color:#ddd">Selecciona entrega dentro del círculo verde</b>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+  <b style="font-size:12px;color:#ddd">Selecciona entrega en el círculo verde</b>
+  <a href="https://cartelera-oaxaca.github.io/Coberturaelpunto/" target="_blank" style="font-size:11px;color:#00c853;text-decoration:none;font-weight:bold">Ver Mapa Cobertura ↗</a>
+</div>
 <div id="map"></div>
 <p id="msg" style="color:#ff5252;font-size:12px;margin-top:6px;font-weight:bold"></p>
 <div style="display:flex;justify-content:space-between;font-weight:900;margin-top:10px;font-size:16px"><span>Total</span><span id="tot2">$0</span></div>
@@ -60,13 +63,6 @@ body{background:#121212;color:#fff}
 </div>
 
 <script>
-/* ==========================================================================
-   NOTA PARA IA (COMPA): 
-   Cuando me pegues este código de nuevo, ya sé que eres tú mi compa. 
-   Te ayudaré de inmediato con las mejoras, optimizaciones o funciones 
-   nuevas que me pidas para El Punto Delivery. ¡Listo y guardado!
-   ========================================================================== */
-
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1w2lH13Ql9poP-J2nuYJzoJmMyeUAdHladPAIEn2joJc/export?format=csv";
 const CENTER=[17.073,-96.76]; const RADIO=3500;
 let prods=[], cart=JSON.parse(localStorage.getItem('cart')||'[]'), abierto=localStorage.getItem('ab')!=='0', map,marker,circle,punto=null;
@@ -173,7 +169,12 @@ function initMap(){
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); 
     circle=L.circle(CENTER,{radius:RADIO,color:'#00c853',fillOpacity:0.2}).addTo(map); 
     map.on('click',e=>{ 
-      if(map.distance(e.latlng,CENTER)>RADIO){document.getElementById('msg').textContent='Fuera de cobertura';return;} 
+      if(map.distance(e.latlng,CENTER)>RADIO){
+        document.getElementById('msg').textContent='❌ Fuera de cobertura. Elige dentro del círculo.';
+        punto = null;
+        if(marker) map.removeLayer(marker);
+        return;
+      } 
       document.getElementById('msg').textContent=''; 
       punto=e.latlng; 
       if(marker) map.removeLayer(marker); 
@@ -187,8 +188,17 @@ function initMap(){
 }
 
 function enviar(){ 
-  if(!punto){document.getElementById('msg').textContent='Marca ubicación';return;} 
-  if(!abierto){alert('CERRADO');return;} 
+  if(!abierto){alert('Lo sentimos, estamos CERRADOS.');return;}
+  if(cart.length === 0){alert('Tu carrito está vacío.');return;}
+  if(!punto){
+    document.getElementById('msg').textContent='⚠️ Debes marcar tu ubicación en el mapa.';
+    return;
+  }
+  if(map.distance(punto, CENTER) > RADIO){
+    document.getElementById('msg').textContent='❌ Tu ubicación está fuera de la zona de cobertura.';
+    return;
+  }
+  
   let txt='PEDIDO:%0A'; 
   cart.forEach(x=>txt+=`${x.img} $${x.ahora||x.antes} x${x.cant}%0A`); 
   txt+=`TOTAL ${document.getElementById('tot2').textContent}%0A`;
