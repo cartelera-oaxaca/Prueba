@@ -202,7 +202,7 @@ function enviar(){
   let txt='PEDIDO:%0A'; 
   cart.forEach(x=>txt+=`${x.img} $${x.ahora||x.antes} x${x.cant}%0A`); 
   txt+=`TOTAL ${document.getElementById('tot2').textContent}%0A`;
-  txt+=`MAPA: https://www.google.com/maps?q=${punto.lat},${punto.lng}%0A`;
+  txt+=`MAPA: https://cartelera-oaxaca.github.io/Coberturaelpunto/`;
   window.open(`https://wa.me/5215644276032?text=${txt}`,'_blank'); 
 }
 
