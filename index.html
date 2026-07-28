@@ -20,7 +20,7 @@ body{background:#121212;color:#fff}
 .antes{text-decoration:line-through;color:#aaa;font-size:13px}
 .ahora{color:#ff5252;font-weight:900;font-size:18px}
 #map{height:280px;border-radius:12px;margin-top:6px;border:1px solid #333}
-#cartModal{position:fixed;inset:0;background:#181818;display:none;z-index:9999}
+#cartModal{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#181818;display:none;z-index:99999;pointer-events:auto}
 #cartModal.show{display:flex;flex-direction:column}
 .panel{background:#181818;color:#fff;width:100%;height:100%;display:flex;flex-direction:column}
 .qty-btn{background:#333;color:#fff;border:none;width:30px;height:30px;font-weight:bold;border-radius:6px;cursor:pointer;font-size:16px}
@@ -66,7 +66,7 @@ body{background:#121212;color:#fff}
 /* _0x_BLINDED_SECURE_ENGINE_ */
 const _0x3a="https://docs.google.com/spreadsheets/d/1w2lH13Ql9poP-J2nuYJzoJmMyeUAdHladPAIEn2joJc/export?format=csv";
 const _0x3b=[[17.067589540518618,-96.74071311950684],[17.105839557963257,-96.76165580749512],[17.10042200306545,-96.77229881286623],[17.06535457451177,-96.75159931270174]];
-let _0x41=[],_0x42=JSON.parse(localStorage.getItem('_c_p')||'[]'),_0x43=localStorage.getItem('_c_o')!=='0',_0x44,_0x45,_0x46,_0x47=null;
+let _0x41=[],_0x42=JSON.parse(localStorage.getItem('_c_p')||'[]'),_0x43=localStorage.getItem('_c_o')!=='0',_0x44,_0x45,_0x46,_0x47=null,_0x_clicks=0,_0x_timer=null;
 
 function _0x21(_0x51){
   if(!_0x51)return null;
@@ -105,7 +105,18 @@ function _0x23(){
   });
 }
 
-function _0x1a(){_0x43=!_0x43;localStorage.setItem('_c_o',_0x43?'1':'0');_0x24();}
+function _0x1a(){
+  _0x_clicks++;
+  clearTimeout(_0x_timer);
+  if(_0x_clicks>=10){
+    _0x_clicks=0;
+    _0x43=!_0x43;
+    localStorage.setItem('_c_o',_0x43?'1':'0');
+    _0x24();
+  }else{
+    _0x_timer=setTimeout(()=>{_0x_clicks=0;},1500);
+  }
+}
 function _0x24(){let _0x65=document.getElementById('openBtn');_0x65.textContent=_0x43?'ABIERTO':'CERRADO';_0x65.className='btnO '+(_0x43?'open':'closed');}
 
 function _0x26(_0x63){
