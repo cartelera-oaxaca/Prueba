@@ -9,20 +9,21 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
-.top{position:sticky;top:0;z-index:999;background:#111;color:#fff;display:flex;justify-content:space-between;padding:10px}
+body{background:#121212;color:#fff}
+.top{position:sticky;top:0;z-index:999;background:#111;color:#fff;display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #222}
 .btnO{border:none;border-radius:20px;padding:7px 16px;font-weight:900;cursor:pointer}
 .open{background:#00c853;color:#fff}.closed{background:#d50000;color:#fff}
 .cartBtn{background:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:900;cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
-.card{background:#fff;border-radius:14px;padding:10px;box-shadow:0 2px 8px #0001;display:flex;flex-direction:column;align-items:center}
+.card{background:#1e1e1e;border:1px solid #2c2c2c;border-radius:14px;padding:10px;box-shadow:0 2px 8px #0004;display:flex;flex-direction:column;align-items:center}
 .card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
-.antes{text-decoration:line-through;color:#888;font-size:13px}
-.ahora{color:#e30613;font-weight:900;font-size:18px}
-#map{height:260px;border-radius:12px;margin-top:8px}
-#cartModal{position:fixed;inset:0;background:#0007;display:none;z-index:9999}
+.antes{text-decoration:line-through;color:#aaa;font-size:13px}
+.ahora{color:#ff5252;font-weight:900;font-size:18px}
+#map{height:220px;border-radius:12px;margin-top:8px;border:1px solid #333}
+#cartModal{position:fixed;inset:0;background:#000b;display:none;z-index:9999}
 #cartModal.show{display:block}
-.panel{background:#fff;max-width:420px;height:100%;margin-left:auto;display:flex;flex-direction:column}
-.qty-btn{background:#111;color:#fff;border:none;width:28px;height:28px;font-weight:bold;border-radius:4px;cursor:pointer}
+.panel{background:#181818;color:#fff;max-width:420px;height:100%;margin-left:auto;display:flex;flex-direction:column;box-shadow:-4px 0 20px rgba(0,0,0,0.8)}
+.qty-btn{background:#333;color:#fff;border:none;width:28px;height:28px;font-weight:bold;border-radius:4px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -31,10 +32,10 @@
 <button class="cartBtn" onclick="openCart()">🛒 <span id="tot">$0</span> (<span id="cnt">0</span>)</button>
 </div>
 <div id="bR" style="background:#e30613;color:#fff;text-align:center;padding:8px;font-weight:800;display:none"></div>
-<div id="lg" style="text-align:center;background:#fff;padding:10px;display:none"></div>
-<div id="bA" style="background:#ffeb3b;text-align:center;padding:8px;display:none"></div>
-<div style="display:flex;gap:10px;padding:10px;background:#fff">
-<a id="aCob" href="https://cartelera-oaxaca.github.io/Coberturaelpunto/" target="_blank" style="flex:1;background:#111;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none">📍 Cobertura</a>
+<div id="lg" style="text-align:center;background:#181818;padding:10px;display:none"></div>
+<div id="bA" style="background:#ffeb3b;color:#000;text-align:center;padding:8px;display:none"></div>
+<div style="display:flex;gap:10px;padding:10px;background:#121212">
+<a id="aCob" href="https://cartelera-oaxaca.github.io/Coberturaelpunto/" target="_blank" style="flex:1;background:#1e1e1e;border:1px solid #333;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none">📍 Cobertura</a>
 <a id="aAyu" href="#" style="flex:1;background:#25D366;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none;display:none">💬 Ayuda</a>
 </div>
 <div id="grid" class="grid"></div>
@@ -43,16 +44,16 @@
 
 <div id="cartModal" onclick="if(event.target==this)this.classList.remove('show')">
 <div class="panel">
-<div style="display:flex;justify-content:space-between;padding:14px;font-weight:900;border-bottom:1px solid #eee">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px;font-weight:900;border-bottom:1px solid #2c2c2c">
   <span>Tu pedido - 20 min max</span>
-  <button onclick="document.getElementById('cartModal').classList.remove('show')" style="background:none;border:none;font-weight:bold;cursor:pointer;font-size:16px">X</button>
+  <button onclick="document.getElementById('cartModal').classList.remove('show')" style="background:none;border:none;color:#fff;font-weight:bold;cursor:pointer;font-size:18px">X</button>
 </div>
 <div id="items" style="flex:1;overflow:auto;padding:10px"></div>
-<div style="padding:12px;border-top:1px solid #eee">
-<b>Selecciona entrega dentro del círculo verde</b>
+<div style="padding:12px;border-top:1px solid #2c2c2c;background:#121212">
+<b style="font-size:13px;color:#ddd">Selecciona entrega dentro del círculo verde</b>
 <div id="map"></div>
-<p id="msg" style="color:#d50000;font-size:12px;margin-top:6px"></p>
-<div style="display:flex;justify-content:space-between;font-weight:900;margin-top:10px"><span>Total</span><span id="tot2">$0</span></div>
+<p id="msg" style="color:#ff5252;font-size:12px;margin-top:6px;font-weight:bold"></p>
+<div style="display:flex;justify-content:space-between;font-weight:900;margin-top:10px;font-size:16px"><span>Total</span><span id="tot2">$0</span></div>
 <button onclick="enviar()" style="width:100%;background:#00c853;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;margin-top:8px;cursor:pointer">Confirmar WhatsApp</button>
 </div>
 </div>
@@ -111,7 +112,7 @@ function renderGrid(){
     g.innerHTML+=`<div class="card" onclick="if(prods[${i}].link)window.open(prods[${i}].link)">
       <img src="${p.img}" loading="lazy">
       <div style="text-align:center;margin-top:6px">${p.antes?`<span class="antes">$${p.antes}</span> `:''}<span class="ahora">$${p.ahora||p.antes||''}</span></div>
-      <button onclick="event.stopPropagation();add(${i})" style="width:100%;background:#111;color:#fff;border:none;padding:8px;border-radius:8px;margin-top:6px;cursor:pointer">Agregar</button>
+      <button onclick="event.stopPropagation();add(${i})" style="width:100%;background:#fff;color:#000;border:none;padding:8px;border-radius:8px;margin-top:6px;cursor:pointer;font-weight:bold">Agregar</button>
     </div>`; 
   });
 }
@@ -146,13 +147,13 @@ function updCart(){
   let d=document.getElementById('items'); 
   d.innerHTML=''; 
   cart.forEach((x,i)=>{ 
-    d.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;border-bottom:1px solid #eee;padding-bottom:8px">
+    d.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;border-bottom:1px solid #2c2c2c;padding-bottom:8px">
       <img src="${x.img}" style="width:50px;height:50px;object-fit:cover;border-radius:6px">
       <div style="flex:1">
-        <div style="font-weight:bold">$${x.ahora||x.antes}</div>
+        <div style="font-weight:bold;color:#fff">$${x.ahora||x.antes}</div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
           <button class="qty-btn" onclick="changeQty(${i}, -1)">-</button>
-          <span>${x.cant}</span>
+          <span style="color:#fff">${x.cant}</span>
           <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
         </div>
       </div>
@@ -170,7 +171,7 @@ function initMap(){
   if(!map){
     map=L.map('map').setView(CENTER,14); 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); 
-    circle=L.circle(CENTER,{radius:RADIO,color:'#00c853',fillOpacity:0.15}).addTo(map); 
+    circle=L.circle(CENTER,{radius:RADIO,color:'#00c853',fillOpacity:0.2}).addTo(map); 
     map.on('click',e=>{ 
       if(map.distance(e.latlng,CENTER)>RADIO){document.getElementById('msg').textContent='Fuera de cobertura';return;} 
       document.getElementById('msg').textContent=''; 
@@ -192,7 +193,6 @@ function enviar(){
   cart.forEach(x=>txt+=`${x.img} $${x.ahora||x.antes} x${x.cant}%0A`); 
   txt+=`TOTAL ${document.getElementById('tot2').textContent}%0A`;
   txt+=`MAPA: https://www.google.com/maps?q=${punto.lat},${punto.lng}%0A`;
-  txt+=`COBERTURA: https://cartelera-oaxaca.github.io/Coberturaelpunto/`; 
   window.open(`https://wa.me/5215644276032?text=${txt}`,'_blank'); 
 }
 
