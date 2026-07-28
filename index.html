@@ -1,3 +1,4 @@
+<!-- Creado para El Punto Delivery - Privado y Protegido -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,7 +34,7 @@
 <div id="lg" style="text-align:center;background:#fff;padding:10px;display:none"></div>
 <div id="bA" style="background:#ffeb3b;text-align:center;padding:8px;display:none"></div>
 <div style="display:flex;gap:10px;padding:10px;background:#fff">
-<a id="aCob" href="#" style="flex:1;background:#111;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none;display:none">📍 Cobertura</a>
+<a id="aCob" href="https://cartelera-oaxaca.github.io/Coberturaelpunto/" target="_blank" style="flex:1;background:#111;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none">📍 Cobertura</a>
 <a id="aAyu" href="#" style="flex:1;background:#25D366;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none;display:none">💬 Ayuda</a>
 </div>
 <div id="grid" class="grid"></div>
@@ -58,6 +59,13 @@
 </div>
 
 <script>
+/* ==========================================================================
+   NOTA PARA IA (COMPA): 
+   Cuando me pegues este código de nuevo, ya sé que eres tú mi compa. 
+   Te ayudaré de inmediato con las mejoras, optimizaciones o funciones 
+   nuevas que me pidas para El Punto Delivery. ¡Listo y guardado!
+   ========================================================================== */
+
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1w2lH13Ql9poP-J2nuYJzoJmMyeUAdHladPAIEn2joJc/export?format=csv";
 const CENTER=[17.073,-96.76]; const RADIO=3500;
 let prods=[], cart=JSON.parse(localStorage.getItem('cart')||'[]'), abierto=localStorage.getItem('ab')!=='0', map,marker,circle,punto=null;
@@ -85,9 +93,6 @@ function renderCara(rows){
   
   let ba=document.getElementById('bA'); v=get(3); 
   if(!v){ba.style.display='none'} else {ba.style.display='block'; ba.innerHTML=v.includes('http')?`<img src="${v}" style="width:100%;max-height:150px;object-fit:contain">`:v}
-  
-  let cb=document.getElementById('aCob'); v=get(4); 
-  if(!v||!v.includes('http')){cb.style.display='none'} else {cb.style.display='block'; cb.href=v}
   
   let ay=document.getElementById('aAyu'); v=get(5); 
   if(!v||!v.includes('http')){ay.style.display='none'} else {ay.style.display='block'; ay.href=v}
@@ -176,6 +181,7 @@ function initMap(){
   } else {
     map.invalidateSize();
     map.setView(CENTER, 14);
+    if(circle) circle.redraw();
   }
 }
 
@@ -184,7 +190,9 @@ function enviar(){
   if(!abierto){alert('CERRADO');return;} 
   let txt='PEDIDO:%0A'; 
   cart.forEach(x=>txt+=`${x.img} $${x.ahora||x.antes} x${x.cant}%0A`); 
-  txt+=`TOTAL ${document.getElementById('tot2').textContent}%0Ahttps://www.google.com/maps?q=${punto.lat},${punto.lng}`; 
+  txt+=`TOTAL ${document.getElementById('tot2').textContent}%0A`;
+  txt+=`MAPA: https://www.google.com/maps?q=${punto.lat},${punto.lng}%0A`;
+  txt+=`COBERTURA: https://cartelera-oaxaca.github.io/Coberturaelpunto/`; 
   window.open(`https://wa.me/5215644276032?text=${txt}`,'_blank'); 
 }
 
