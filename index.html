@@ -1,146 +1,81 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>99 | Cartelera Oaxaca HD</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tienda Express 20 Min</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-:root{--bg:#09090b;--card:#17171a;--border:#27272a;--accent:#f43f5e}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;background:var(--bg);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
-body{min-height:100dvh}
-.header{padding:12px;text-align:center;position:sticky;top:0;z-index:20;background:rgba(9,9,11,.9);border-bottom:1px solid var(--border)}
-.header h2{font-family:Outfit;font-weight:900;font-size:13px;letter-spacing:1.5px}
-#txt-titulo{font-family:Outfit,sans-serif!important;font-weight:900!important;text-align:center;margin:18px auto 12px;font-size:clamp(30px,7vw,44px);line-height:.9;letter-spacing:-1.5px;max-width:96vw;text-transform:uppercase;text-shadow:0 0 25px rgba(244,63,94,.35)}
-#txt-titulo span{background:linear-gradient(90deg,#f43f5e,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.banner-rojo{background:#f43f5e;color:#fff;text-align:center;padding:10px;font-weight:800;font-size:12px;display:none;width:98vw;margin:0 auto;border-radius:0 0 12px 12px}
-#banner-intermedio{width:98vw;margin:8px auto;display:none;text-align:center;font-weight:800;font-size:13px;color:#fb7185;background:rgba(244,63,94,.1);border:1px dashed var(--accent);padding:10px;border-radius:12px}
-#espectacular{width:98vw;margin:8px auto;display:none;border-radius:18px;padding:2px;background:linear-gradient(90deg,#f43f5e,#fbbf24,#f43f5e)}
-#espectacular>div{background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/5;max-height:180px}
-#espectacular img{width:100%;height:100%;object-fit:cover;display:block}
-#btnCobertura{width:98vw;margin:8px auto;display:none;text-align:center}
-#btnCobertura a{background:#fff;color:#000;padding:11px 22px;border-radius:999px;font-weight:900;text-decoration:none;display:inline-block;font-size:13px}
-.grid{width:98vw;margin:8px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-bottom:90px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}@media(min-width:1024px){.grid{grid-template-columns:repeat(5,1fr)}}
-.cuadro{aspect-ratio:1;border-radius:16px;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;content-visibility:auto}
-.cuadro img.logo{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;top:19px;height:calc(100% - 19px);background:#111}
-.nombre-icono{position:absolute;top:0;left:0;right:0;height:19px;background:var(--accent);color:#fff;font-size:8px;font-weight:900;text-align:center;line-height:19px;z-index:3;overflow:hidden;white-space:nowrap}
-.n{position:absolute;top:22px;left:5px;font-size:7px;font-weight:800;background:rgba(0,0,0,.75);padding:3px 6px;border-radius:999px;z-index:4}
-.libre-center{position:absolute;inset:0;top:19px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#71717a}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:10px}
-#box{background:var(--card);border:1px solid var(--border);border-radius:20px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto}
-.btn{width:100%;padding:13px;border-radius:12px;border:none;font-weight:800;margin-top:8px;cursor:pointer;text-decoration:none;display:flex;justify-content:center}
-.btn-rojo{background:var(--accent);color:#fff}.btn-gris{background:#27272a;color:#fff}
-.like-bar{display:flex;gap:8px;margin:10px 0}
-.like-btn{flex:1;padding:10px;border-radius:999px;border:1px solid var(--border);background:#27272a;color:#fff;font-weight:800;font-size:12px;cursor:pointer}
-.like-btn.activo{background:#f43f5e}
-.coment-box{background:#09090b;border:1px solid var(--border);border-radius:12px;padding:8px;margin-top:8px}
-.coment-input{width:100%;background:transparent;border:none;color:#fff;outline:none;font-size:13px}
-#btnAyuda{position:fixed;bottom:16px;right:16px;z-index:9000;background:#fff;color:#000;border:0;border-radius:999px;padding:13px 18px;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.5);cursor:pointer;display:none}
-#modalAyuda{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;flex-direction:column;z-index:100000;padding:12px}
-#modalAyuda.activo{display:flex}
-#visorWrap{flex:1;background:#fff;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-#visorWrap iframe,#visorWrap img{width:100%;height:100%;border:0;object-fit:contain;display:block}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+.top{position:sticky;top:0;z-index:999;background:#111;color:#fff;display:flex;justify-content:space-between;padding:10px}
+.btnO{border:none;border-radius:20px;padding:7px 16px;font-weight:900;cursor:pointer}
+.open{background:#00c853;color:#fff}.closed{background:#d50000;color:#fff}
+.cartBtn{background:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
+.card{background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px #0001}
+.card img{width:100%;height:130px;object-fit:contain}
+.antes{text-decoration:line-through;color:#888;font-size:13px}.ahora{color:#e30613;font-weight:900;font-size:18px}
+#map{height:260px;border-radius:12px;margin-top:8px}
+#cartModal{position:fixed;inset:0;background:#0007;display:none;z-index:9999}
+#cartModal.show{display:block}
+.panel{background:#fff;max-width:420px;height:100%;margin-left:auto;display:flex;flex-direction:column}
 </style>
 </head>
 <body>
-<div class="header"><h2>CARTELERA DIGITAL • OAXACA</h2></div>
-<div class="banner-rojo" id="txt-baner2"></div>
-<h1 id="txt-titulo">Directorio <span>Negocios</span></h1>
-<div id="banner-intermedio"></div>
-<div id="espectacular"><div id="espCont"></div></div>
-<div id="btnCobertura"><a id="linkCobertura" target="_blank">📍 VER COBERTURA 8KM</a></div>
-<div class="grid" id="grid">Cargando HD...</div>
-<div id="modal"><div id="box"></div></div>
-<button id="btnAyuda">❓ AYUDA</button>
-<div id="modalAyuda">
-  <div style="display:flex;gap:8px;margin-bottom:10px">
-    <button onclick="cerrarAyuda()" style="flex:1;background:#27272a;color:#fff;border:1px solid #3f3f46;padding:12px;border-radius:12px;font-weight:900">✕ CERRAR</button>
-    <a id="abrirFuera" target="_blank" style="flex:1;background:#fff;color:#000;padding:12px;border-radius:12px;font-weight:900;text-align:center;text-decoration:none;display:none">Abrir ↗</a>
-  </div>
-  <div id="visorWrap"><iframe id="visorAyuda" src="" style="display:none"></iframe><img id="visorImg" src="" style="display:none"></div>
+<div class="top">
+<button id="openBtn" class="btnO open" onclick="toggle()">ABIERTO</button>
+<button class="cartBtn" onclick="openCart()">🛒 <span id="tot">$0</span> (<span id="cnt">0</span>)</button>
+</div>
+<div id="bR" style="background:#e30613;color:#fff;text-align:center;padding:8px;font-weight:800;display:none"></div>
+<div id="lg" style="text-align:center;background:#fff;padding:10px;display:none"></div>
+<div id="bA" style="background:#ffeb3b;text-align:center;padding:8px;display:none"></div>
+<div style="display:flex;gap:10px;padding:10px;background:#fff">
+<a id="aCob" href="#" style="flex:1;background:#111;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none;display:none">📍 Cobertura</a>
+<a id="aAyu" href="#" style="flex:1;background:#25D366;color:#fff;padding:10px;border-radius:10px;text-align:center;text-decoration:none;display:none">💬 Ayuda</a>
+</div>
+<div id="grid" class="grid"></div>
+<div id="esp"></div>
+<div id="sobre"></div>
+<div id="cartModal" onclick="if(event.target==this)this.classList.remove('show')">
+<div class="panel">
+<div style="display:flex;justify-content:space-between;padding:14px;font-weight:900;border-bottom:1px solid #eee"><span>Tu pedido - 20 min max</span><button onclick="document.getElementById('cartModal').classList.remove('show')">X</button></div>
+<div id="items" style="flex:1;overflow:auto;padding:10px"></div>
+<div style="padding:12px;border-top:1px solid #eee">
+<b>Selecciona entrega dentro del círculo verde</b>
+<div id="map"></div>
+<p id="msg" style="color:#d50000;font-size:12px;margin-top:6px"></p>
+<div style="display:flex;justify-content:space-between;font-weight:900;margin-top:10px"><span>Total</span><span id="tot2">$0</span></div>
+<button onclick="enviar()" style="width:100%;background:#00c853;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;margin-top:8px">Confirmar WhatsApp</button>
+</div>
+</div>
 </div>
 <script>
-const SHEET_URL="https://docs.google.com/spreadsheets/d/1qoDyTeMp6Ex_Nbx-QG4fn1nq7g_4jtaDSkAQn1Dpv84/gviz/tq?tqx=out:csv";
-const WA_BASE="5215644276032";
-const isUrl=s=>{try{if(!s) return false;const u=new URL(String(s).trim());return u.protocol.startsWith('http')&&String(s).length>8}catch{return false}};
-const isShow=v=>{const t=String(v||'').trim();if(!t) return false;if(t.toLowerCase()==='false'||t.toLowerCase()==='0'||t.toLowerCase()==='null') return false;return true;}
-function toHD(u){if(!u) return ''; let s=String(u).trim(); if(s.includes('drive.google.com')){const m=s.match(/\/d\/([a-zA-Z0-9_-]+)/)||s.match(/id=([a-zA-Z0-9_-]+)/); if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;} return s;}
-function parseCSV(t){const rows=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i],nx=t[i+1];if(ch=='"'){if(q&&nx=='"'){c+='"';i++;}else q=!q;}else if(ch==','&&!q){r.push(c.trim());c='';}else if((ch=='\n'||ch=='\r')&&!q){if(c||r.length){r.push(c.trim());rows.push(r);r=[];c='';}if(ch=='\r'&&nx=='\n')i++;}else c+=ch;}if(c||r.length){r.push(c.trim());rows.push(r);}return rows.filter(x=>x.some(v=>v));}
-let TODOS=[]; let HELP_URL="";
-async function cargar(){
- const res=await fetch(SHEET_URL+'&cb='+Date.now(),{cache:'no-store'});const txt=await res.text();const all=parseCSV(txt);
- const G2=(all[1]?.[6]||'').trim(), G3=(all[2]?.[6]||'').trim(), G4=(all[3]?.[6]||'').trim(), G6=(all[5]?.[6]||'').trim(), G7=(all[6]?.[6]||'').trim();
- const G12=(all[11]?.[6]||'').trim();
- if(isShow(G2)){const b=document.getElementById('txt-baner2');b.textContent=G2;b.style.display='block';}
- if(isShow(G3)){const clean=G3.replace(/<[^>]*>/g,'').trim();document.getElementById('txt-titulo').innerHTML=clean.includes(' ')? clean.split(' ').slice(0,-1).join(' ')+' <span>'+clean.split(' ').slice(-1)+'</span>':clean+' <span></span>';}
- if(isShow(G4)){const b=document.getElementById('banner-intermedio');b.textContent=G4;b.style.display='block';}
- if(isUrl(G6)){document.getElementById('btnCobertura').style.display='block';document.getElementById('linkCobertura').href=G6;}
- else if(isShow(G6)&&G6.toLowerCase().includes('true')){document.getElementById('btnCobertura').style.display='block';document.getElementById('linkCobertura').href='https://coberturaoaxacacartelera.netlify.app/';}
- if(isShow(G7)&&isUrl(toHD(G7))){const esp=document.getElementById('espectacular');const cont=document.getElementById('espCont');esp.style.display='block';cont.innerHTML=`<img src="${toHD(G7)}" loading="eager" decoding="async">`;}
- if(isUrl(G12)){HELP_URL=toHD(G12);document.getElementById('btnAyuda').style.display='block';document.getElementById('abrirFuera').href=G12;document.getElementById('abrirFuera').style.display='block';}
- for(const cols of all.slice(1)){
-  const n=parseInt(cols[0]);if(isNaN(n))continue;
-  const B=cols[1]?.trim(),C=cols[2]?.trim(),D=cols[3]?.trim(),E=cols[4]?.trim(),F=cols[5]?.trim();
-  const J=cols[9]?.trim(),K=cols[10]?.trim(),L=cols[11]?.trim(),M=cols[12]?.trim(),N=cols[13]?.trim(),O=cols[14]?.trim(),P=cols[15]?.trim();
-  if(!B&&!C)continue;
-  TODOS.push({n,logo:toHD(B),clickImg:toHD(C),dir:D,wa:E,titulo:F||'SOCIO',banJ:isUrl(toHD(J))?toHD(J):'',banK:isUrl(toHD(K))?toHD(K):'',ubi:L,banM:isUrl(toHD(M))?toHD(M):'',cat:N||'',cupon:O,lugarTxt:P});
- }
- pintar(TODOS);
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1w2lH13Ql9poP-J2nuYJzoJmMyeUAdHladPAIEn2joJc/export?format=csv";
+const CENTER=[17.073,-96.76]; const RADIO=3500;
+let prods=[], cart=JSON.parse(localStorage.getItem('cart')||'[]'), abierto=localStorage.getItem('ab')!=='0', map,marker,punto=null;
+function parseB(s){ if(!s) return null; s=s.toString().trim().replace(/"/g,''); let m=s.match(/https?:\/\/[^\s]+/); if(!m) return null; let url=m[0]; let r=s.replace(url,'').trim().split(/\s+/).filter(Boolean); let an=null,ah=null; if(r.length>=2){an=parseFloat(r[0]);ah=parseFloat(r[1]);} else if(r.length==1){ah=parseFloat(r[0]);} return {img:url,antes:an,ahora:ah}; }
+function renderCara(rows){
+let get=(i)=>rows[i]?.[0]?.replace(/"/g,'').trim()||"";
+let br=document.getElementById('bR'), v=get(1); if(!v){br.style.display='none'} else {br.style.display='block'; br.innerHTML=v.includes('http')?`<img src="${v}" style="width:100%;max-height:90px;object-fit:contain">`:v}
+let lg=document.getElementById('lg'); v=get(2); if(!v||!v.includes('http')){lg.style.display='none'} else {lg.style.display='block'; lg.innerHTML=`<img src="${v}" style="max-height:70px">`}
+let ba=document.getElementById('bA'); v=get(3); if(!v){ba.style.display='none'} else {ba.style.display='block'; ba.innerHTML=v.includes('http')?`<img src="${v}" style="width:100%;max-height:150px;object-fit:contain">`:v}
+let cb=document.getElementById('aCob'); v=get(4); if(!v||!v.includes('http')){cb.style.display='none'} else {cb.style.display='block'; cb.href=v}
+let ay=document.getElementById('aAyu'); v=get(5); if(!v||!v.includes('http')){ay.style.display='none'} else {ay.style.display='block'; ay.href=v}
+let es=document.getElementById('esp'); v=get(6); es.innerHTML=(v&&v.includes('http'))?`<img src="${v}" style="width:100%">`:''
+let so=document.getElementById('sobre'); v=get(7); so.innerHTML=(v&&v.includes('http'))?`<img src="${v}" style="width:100%">`:''
 }
-function pintar(lista){
- const grid=document.getElementById('grid');grid.innerHTML='';const frag=document.createDocumentFragment();
- for(let i=1;i<=99;i++){
-  const inf=lista.find(x=>x.n===i);const div=document.createElement('div');div.className='cuadro';
-  if(inf){div.innerHTML=`<div class="nombre-icono">${inf.titulo.slice(0,20).toUpperCase()}</div><div class="n">#${String(i).padStart(3,'0')}</div><img class="logo" src="${inf.logo}" loading="${i<16?'eager':'lazy'}" decoding="async">`;}
-  else{div.innerHTML=`<div class="nombre-icono" style="background:#27272a">LIBRE</div><div class="n">#${String(i).padStart(3,'0')}</div><div class="libre-center">💎 LIBRE</div>`;}
-  div.onclick=()=>abrirModal(i,inf);frag.appendChild(div);
- }
- grid.appendChild(frag);
-}
-function getLikes(n){return JSON.parse(localStorage.getItem('likes_'+n)||'{"like":0,"encanta":0,"my":null}');}
-function setLike(n,tipo){let d=getLikes(n); if(d.my===tipo){d[tipo]--;d.my=null;}else{if(d.my){d[d.my]--;}d[tipo]++;d.my=tipo;} localStorage.setItem('likes_'+n,JSON.stringify(d)); abrirModal(n,TODOS.find(x=>x.n===n));}
-function addComent(n){const input=document.getElementById('cInput');const txt=input.value.trim();if(!txt)return;let com=JSON.parse(localStorage.getItem('com_'+n)||'[]');com.push({t:txt, f:new Date().toLocaleDateString()});localStorage.setItem('com_'+n,JSON.stringify(com));abrirModal(n,TODOS.find(x=>x.n===n));}
-function abrirModal(num,inf){
- const box=document.getElementById('box');const modal=document.getElementById('modal');
- if(!inf){box.innerHTML=`<div style="padding:22px;text-align:center"><h2>#${num} LIBRE</h2><a class="btn btn-rojo" href="https://wa.me/${WA_BASE}?text=Quiero%20cuadro%20${num}" target="_blank">RESERVAR</a><button class="btn btn-gris" onclick="modal.style.display='none'">Cerrar</button></div>`;modal.style.display='flex';return;}
- const likes=getLikes(num); const coments=JSON.parse(localStorage.getItem('com_'+num)||'[]');
- box.innerHTML=`<div style="padding:12px;text-align:center">
-  ${inf.banJ?`<img src="${inf.banJ}" style="width:100%;height:70px;object-fit:cover;border-radius:12px;margin-bottom:6px">`:''}
-  ${inf.banK?`<img src="${inf.banK}" style="width:100%;height:70px;object-fit:cover;border-radius:12px;margin-bottom:6px">`:''}
-  <div style="display:flex;gap:6px;justify-content:center;margin:6px 0">${inf.lugarTxt?`<span style="background:#18181b;border:1px solid #27272a;padding:5px 10px;border-radius:999px;font-size:11px">📍 ${inf.lugarTxt}</span>`:''}${inf.cat?`<span style="background:#f43f5e;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800">🏷️ ${inf.cat}</span>`:''}</div>
-  ${inf.clickImg?`<img src="${inf.clickImg}" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px">`:''}
-  <h3 style="margin:10px 0">${inf.titulo}</h3>
-  <div class="like-bar">
-   <button class="like-btn ${likes.my==='like'?'activo':''}" onclick="setLike(${num},'like')">👍 Me gusta ${likes.like||''}</button>
-   <button class="like-btn ${likes.my==='encanta'?'activo':''}" onclick="setLike(${num},'encanta')">❤️ Encanta ${likes.encanta||''}</button>
-  </div>
-  ${inf.banM?`<img src="${inf.banM}" style="width:100%;height:80px;object-fit:cover;border-radius:12px;margin:8px 0">`:''}
-  ${inf.cupon?`<div style="border:1px dashed #f43f5e;padding:10px;border-radius:12px;background:rgba(244,63,94,.1);font-weight:800;font-size:13px">🎟️ ${inf.cupon}</div>`:''}
-  ${inf.dir?`<a class="btn btn-rojo" href="${inf.dir}" target="_blank">IR AL NEGOCIO</a>`:''}
-  ${inf.wa?`<a class="btn" style="background:#22c55e;color:#fff" href="https://wa.me/52${inf.wa.replace(/[^0-9]/g,'').slice(-10)}" target="_blank">WhatsApp Directo</a>`:''}
-  ${inf.ubi?`<a class="btn" style="background:#0ea5e9;color:#fff" href="${inf.ubi}" target="_blank">📍 Ubicación</a>`:''}
-  <div style="text-align:left;margin-top:14px"><b style="font-size:13px">💬 Comentarios (${coments.length})</b>
-   ${coments.map(c=>`<div style="background:#09090b;border:1px solid #27272a;padding:8px;border-radius:10px;margin-top:6px;font-size:12px"><b>Cliente:</b> ${c.t}<br><span style="font-size:10px;color:#71717a">${c.f}</span></div>`).join('')}
-   <div class="coment-box"><input id="cInput" class="coment-input" placeholder="Escribe un comentario bueno..."><button onclick="addComent(${num})" style="margin-top:6px;background:#f43f5e;color:#fff;border:none;padding:6px 12px;border-radius:999px;font-weight:800;font-size:11px">Publicar</button></div>
-  </div>
-  <button class="btn btn-gris" onclick="document.getElementById('modal').style.display='none'">Cerrar</button>
- </div>`;
- modal.style.display='flex';
-}
-document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')e.currentTarget.style.display='none';});
-function abrirAyuda(){
- if(!HELP_URL) return;
- const isImg = HELP_URL.match(/\.(jpeg|jpg|png|webp|gif)/i) || HELP_URL.includes('uc?export=view');
- const iframe=document.getElementById('visorAyuda'); const img=document.getElementById('visorImg');
- document.body.style.overflow='hidden';
- document.getElementById('modalAyuda').classList.add('activo');
- if(isImg){iframe.style.display='none';img.style.display='block';img.src=HELP_URL;}
- else{img.style.display='none';iframe.style.display='block';iframe.src=HELP_URL;}
-}
-function cerrarAyuda(){document.getElementById('modalAyuda').classList.remove('activo');document.body.style.overflow='';setTimeout(()=>{document.getElementById('visorAyuda').src="";document.getElementById('visorImg').src="";},200);}
-document.getElementById('btnAyuda').onclick=abrirAyuda;
-document.getElementById('modalAyuda').addEventListener('click',e=>{ if(e.target.id==='modalAyuda') cerrarAyuda(); });
+function renderGrid(){ let g=document.getElementById('grid'); g.innerHTML=''; prods.forEach((p,i)=>{ g.innerHTML+=`<div class="card" onclick="if(prods[${i}].link)window.open(prods[${i}].link)"><img src="${p.img}" loading="lazy"><div style="text-align:center">${p.antes?`<span class="antes">$${p.antes}</span> `:''}<span class="ahora">$${p.ahora||p.antes||''}</span></div><button onclick="event.stopPropagation();add(${i})" style="width:100%;background:#111;color:#fff;border:none;padding:8px;border-radius:8px;margin-top:6px">Agregar</button></div>`; });}
+function toggle(){ abierto=!abierto; localStorage.setItem('ab',abierto?'1':'0'); updOpen(); }
+function updOpen(){ let b=document.getElementById('openBtn'); b.textContent=abierto?'ABIERTO':'CERRADO'; b.className='btnO '+(abierto?'open':'closed'); }
+function add(i){ let p=prods[i]; let f=cart.find(x=>x.img==p.img); if(f) f.cant++; else cart.push({...p,cant:1}); save(); }
+function save(){ localStorage.setItem('cart',JSON.stringify(cart)); updCart(); }
+function removeItem(i){ cart.splice(i,1); save(); }
+function updCart(){ let t=0,c=0; cart.forEach(x=>{t+=(x.ahora||x.antes||0)*x.cant; c+=x.cant;}); document.getElementById('tot').textContent='$'+t; document.getElementById('tot2').textContent='$'+t; document.getElementById('cnt').textContent=c; let d=document.getElementById('items'); d.innerHTML=''; cart.forEach((x,i)=>{ d.innerHTML+=`<div style="display:flex;gap:8px;margin-bottom:8px"><img src="${x.img}" style="width:50px;height:50px;object-fit:contain"><div style="flex:1">$${x.ahora||x.antes} x ${x.cant}</div><button onclick="removeItem(${i})">x</button></div>`; });}
+function openCart(){ document.getElementById('cartModal').classList.add('show'); setTimeout(initMap,200); }
+function initMap(){ if(map){map.invalidateSize();return;} map=L.map('map').setView(CENTER,14); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); L.circle(CENTER,{radius:RADIO,color:'#00c853',fillOpacity:0.15}).addTo(map); map.on('click',e=>{ if(map.distance(e.latlng,CENTER)>RADIO){document.getElementById('msg').textContent='Fuera de cobertura';return;} document.getElementById('msg').textContent=''; punto=e.latlng; if(marker) map.removeLayer(marker); marker=L.marker(e.latlng).addTo(map); });}
+function enviar(){ if(!punto){document.getElementById('msg').textContent='Marca ubicación';return;} if(!abierto){alert('CERRADO');return;} let ayu=document.getElementById('aAyu'); if(!ayu.href||ayu.href=='#'){alert('Falta WhatsApp en A6');return;} let txt='PEDIDO:%0A'; cart.forEach(x=>txt+=`${x.img} $${x.ahora||x.antes} x${x.cant}%0A`); txt+=`TOTAL ${document.getElementById('tot2').textContent}%0Ahttps://www.google.com/maps?q=${punto.lat},${punto.lng}`; window.open(ayu.href+'?text='+txt,'_blank'); }
+async function cargar(){ let r=await fetch(SHEET_CSV_URL); let t=await r.text(); let rows=t.split('\n').map(x=>x.split(',')); prods=[]; for(let i=1;i<rows.length;i++){ let b=rows[i][1]?.replace(/"/g,'').trim()||""; if(!b) continue; let p=parseB(b); if(!p) continue; let link=(rows[i][2]||rows[i][3]||"").replace(/"/g,'').trim(); if(link.includes('http')) p.link=link; prods.push(p);} renderCara(rows); renderGrid(); updOpen(); updCart(); }
 cargar();
 </script>
 </body>
