@@ -6,24 +6,28 @@
 <title>Delivery El Punto</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#121212;color:#fff;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px}
-.cnt{width:100%;max-width:400px;display:flex;flex-direction:column;gap:12px}
-.img-box{width:100%;height:220px;background:#222;border-radius:10px;overflow:hidden;position:relative;border:1px solid #333}
+body{background:#121212;color:#fff;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px}
+.cnt{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px}
+h2{font-size:17px;text-align:center;margin-bottom:2px}
+.img-box{width:100%;height:210px;background:#222;border-radius:10px;overflow:hidden;position:relative;border:1px solid #333}
 .img-box img{width:100%;height:100%;object-fit:cover}
-.btn-wsp-flotante{position:absolute;bottom:10px;left:10px;right:10px;background:#25D366;color:#fff;padding:10px;border-radius:6px;text-align:center;font-weight:bold;text-decoration:none;font-size:14px;box-shadow:0 4px 10px rgba(0,0,0,0.5);z-index:5}
-.btn-est{padding:10px;font-size:14px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;text-align:center;user-select:none}
+.btn-wsp-flotante{position:absolute;bottom:10px;left:10px;right:10px;background:#25D366;color:#fff;padding:10px;border-radius:6px;text-align:center;font-weight:bold;text-decoration:none;font-size:14px;box-shadow:0 4px 10px rgba(0,0,0,0.6);z-index:5}
+.btn-est{padding:10px;font-size:14px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;text-align:center;user-select:none;width:100%}
 .c-err{background:#d9534f;color:#fff}
 .c-ab{background:#5cb85c;color:#fff}
+.nav-sec{display:flex;flex-direction:column;gap:10px;width:100%}
 .nav-btn{width:100%;padding:12px;background:#ff9800;color:#000;font-weight:bold;border:none;border-radius:8px;font-size:15px;cursor:pointer;text-align:center}
-#v-cnt{display:none;width:100%;height:480px;background:#fff;border-radius:10px;overflow:hidden;position:relative;margin-top:5px}
+#v-cnt{display:none;width:100%;height:75vh;background:#fff;border-radius:10px;overflow:hidden;position:relative;margin-top:2px}
 #v-cnt iframe{width:100%;height:100%;border:none}
-.c-v{position:absolute;top:5px;right:5px;background:#000;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-weight:bold;cursor:pointer;z-index:10}
+.c-v{position:absolute;top:5px;right:5px;background:#000;color:#fff;border:none;padding:6px 12px;border-radius:5px;font-weight:bold;cursor:pointer;z-index:10;font-size:13px}
 </style>
 </head>
 <body>
 <div class="cnt">
-<h2 style="font-size:18px;">Delivery El Punto</h2>
+<h2>Delivery El Punto</h2>
 
+<!-- Elementos que se ocultan al abrir un visor para dar espacio total -->
+<div id="panel-principal" class="nav-sec">
 <div class="img-box">
 <img id="imgA1" src="https://i.ibb.co/S7t5K5rF/26639.jpg" alt="Portada">
 <a class="btn-wsp-flotante" href="https://wa.me/525644276032?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank">💬 Chat Directo WhatsApp</a>
@@ -33,28 +37,54 @@ body{background:#121212;color:#fff;display:flex;flex-direction:column;align-item
 
 <button class="nav-btn" onclick="_v('https://cartelera-oaxaca.github.io/Coberturaelpunto/')">🗺️ Ver Cobertura</button>
 <button class="nav-btn" onclick="_v('https://super-delivery-elpunto.netlify.app/')">📦 Ver Catálogo</button>
+</div>
 
+<!-- Visor en Pantalla Amplia -->
 <div id="v-cnt">
-<button class="c-v" onclick="_cv()">✖ Cerrar</button>
+<button class="c-v" onclick="_cv()">✖ Cerrar y Volver</button>
 <iframe id="mF" src=""></iframe>
 </div>
 </div>
 
 <script>
-let _st=false,_t;
+// Cargar estado guardado para que no se borre al recargar
+let _st = localStorage.getItem('_estadoNegocio') === 'true';
+let _t;
+
+function actualizarUI() {
+    let e = document.getElementById('bEst');
+    if(_st){
+        e.className="btn-est c-ab";
+        e.innerText="ABIERTO";
+    } else {
+        e.className="btn-est c-err";
+        e.innerText="CERRADO";
+    }
+}
+actualizarUI();
+
 function _s(){
-_st=!_st;
-let e=document.getElementById('bEst');
-if(_st){e.className="btn-est c-ab";e.innerText="ABIERTO";}
-else{e.className="btn-est c-err";e.innerText="CERRADO";}
+    _st = !_st;
+    localStorage.setItem('_estadoNegocio', _st);
+    actualizarUI();
 }
+
 function _v(u){
-let v=document.getElementById('v-cnt'),m=document.getElementById('mF');
-m.src=u;v.style.display="block";v.scrollIntoView({behavior:'smooth'});
+    // Oculta portada, botones y estado para dejar espacio limpio al visor
+    document.getElementById('panel-principal').style.display = 'none';
+    let v = document.getElementById('v-cnt');
+    let m = document.getElementById('mF');
+    m.src = u;
+    v.style.display = "block";
 }
+
 function _cv(){
-let v=document.getElementById('v-cnt'),m=document.getElementById('mF');
-m.src="";v.style.display="none";
+    let v = document.getElementById('v-cnt');
+    let m = document.getElementById('mF');
+    m.src = "";
+    v.style.display = "none";
+    // Regresa los botones y la portada original
+    document.getElementById('panel-principal').style.display = 'flex';
 }
 </script>
 </body>
