@@ -6,7 +6,7 @@
 <title>Delivery El Punto</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#121212;color:#fff;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px}
+body{background:#121212;color:#fff;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px;padding-bottom:90px}
 .cnt{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px}
 h2{font-size:17px;text-align:center;margin-bottom:2px}
 .img-box{width:100%;height:210px;background:#222;border-radius:10px;overflow:hidden;position:relative;border:1px solid #333}
@@ -16,7 +16,46 @@ h2{font-size:17px;text-align:center;margin-bottom:2px}
 .c-err{background:#d9534f;color:#fff}
 .c-ab{background:#5cb85c;color:#fff}
 .nav-sec{display:flex;flex-direction:column;gap:10px;width:100%}
-.nav-btn{width:100%;padding:12px;background:#ff9800;color:#000;font-weight:bold;border:none;border-radius:8px;font-size:15px;cursor:pointer;text-align:center}
+
+/* Contenedor inferior flotante para los botones redondos */
+.contenedor-botones-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-top: 1px solid #222;
+}
+
+/* Estilo para hacer los botones completamente redondos */
+.btn-redondo {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ff9800;
+    color: #000;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.btn-redondo:active {
+    transform: scale(0.92);
+}
+
 #v-cnt{display:none;width:100%;height:75vh;background:#fff;border-radius:10px;overflow:hidden;position:relative;margin-top:2px}
 #v-cnt iframe{width:100%;height:100%;border:none}
 .c-v{position:absolute;top:5px;right:5px;background:#000;color:#fff;border:none;padding:6px 12px;border-radius:5px;font-weight:bold;cursor:pointer;z-index:10;font-size:13px}
@@ -29,14 +68,12 @@ h2{font-size:17px;text-align:center;margin-bottom:2px}
 <!-- Elementos que se ocultan al abrir un visor para dar espacio total -->
 <div id="panel-principal" class="nav-sec">
 <div class="img-box">
+<!-- La imagen lee directo de la variable configurada según tu Sheet -->
 <img id="imgA1" src="https://i.ibb.co/S7t5K5rF/26639.jpg" alt="Portada">
 <a class="btn-wsp-flotante" href="https://wa.me/525644276032?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank">💬 Chat Directo WhatsApp</a>
 </div>
 
 <button id="bEst" class="btn-est c-err" ontouchstart="_t=setTimeout(_s,1000);" ontouchend="clearTimeout(_t);" onmousedown="_t=setTimeout(_s,1000);" onmouseup="clearTimeout(_t);">CERRADO</button>
-
-<button class="nav-btn" onclick="_v('https://cartelera-oaxaca.github.io/Coberturaelpunto/')">🗺️ Ver Cobertura</button>
-<button class="nav-btn" onclick="_v('https://super-delivery-elpunto.netlify.app/')">📦 Ver Catálogo</button>
 </div>
 
 <!-- Visor en Pantalla Amplia -->
@@ -46,7 +83,23 @@ h2{font-size:17px;text-align:center;margin-bottom:2px}
 </div>
 </div>
 
+<!-- Botones redondos fijos en la parte inferior con toda la lógica intacta -->
+<div class="contenedor-botones-inferior">
+    <button class="btn-redondo" onclick="_v('cob')" title="Ver Cobertura">🗺️</button>
+    <button class="btn-redondo" onclick="_v('cat')" title="Ver Catálogo">📦</button>
+</div>
+
 <script>
+// Configuración de URLs basada en tu estructura de datos (Hoja 1)
+const CONFIG = {
+    imagenPortada: "https://i.ibb.co/S7t5K5rF/26639.jpg", // Aquí puedes cambiar la URL de la imagen cuando gustes
+    urlCobertura: "https://cartelera-oaxaca.github.io/Coberturaelpunto/",
+    urlCatalogo: "https://super-delivery-elpunto.netlify.app/"
+};
+
+// Aplicar imagen de portada al cargar
+document.getElementById('imgA1').src = CONFIG.imagenPortada;
+
 // Cargar estado guardado para que no se borre al recargar
 let _st = localStorage.getItem('_estadoNegocio') === 'true';
 let _t;
@@ -69,8 +122,9 @@ function _s(){
     actualizarUI();
 }
 
-function _v(u){
-    // Oculta portada, botones y estado para dejar espacio limpio al visor
+function _v(tipo){
+    let u = (tipo === 'cob') ? CONFIG.urlCobertura : CONFIG.urlCatalogo;
+    // Oculta portada y estado para dar espacio limpio al visor
     document.getElementById('panel-principal').style.display = 'none';
     let v = document.getElementById('v-cnt');
     let m = document.getElementById('mF');
@@ -83,7 +137,7 @@ function _cv(){
     let m = document.getElementById('mF');
     m.src = "";
     v.style.display = "none";
-    // Regresa los botones y la portada original
+    // Regresa la portada original
     document.getElementById('panel-principal').style.display = 'flex';
 }
 </script>
