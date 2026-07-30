@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Forzar barra de herramientas del navegador en negro -->
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Delivery Beer El Punto</title>
@@ -23,10 +22,9 @@
             min-height: 100vh;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 25px; /* Margen para subir los iconos y que no toquen el borde */
+            padding-bottom: 35px; /* Sube los iconos todavía más para que no queden hasta abajo */
         }
 
-        /* Contenedor Superior (Botón Abierto) */
         .top-bar {
             width: 100%;
             max-width: 600px;
@@ -47,7 +45,6 @@
             box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
         }
 
-        /* Contenedor Central */
         .container {
             width: 100%;
             max-width: 600px;
@@ -59,7 +56,6 @@
             padding: 10px;
         }
 
-        /* Banner estilo tarjeta */
         .banner {
             width: 100%;
             max-width: 420px;
@@ -114,7 +110,6 @@
             font-size: 16px;
         }
 
-        /* Barra de navegación inferior flotante */
         .nav-bar {
             width: 88%;
             max-width: 380px;
@@ -123,9 +118,9 @@
             border-radius: 22px;
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 12px 0;
             box-shadow: 0 8px 25px rgba(0,0,0,0.9);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .nav-item {
@@ -146,12 +141,10 @@
 </head>
 <body>
 
-    <!-- Botón de Estado Superior -->
     <div class="top-bar">
         <button class="status-btn">Abierto</button>
     </div>
 
-    <!-- Contenido Principal -->
     <div class="container">
         <div class="banner">
             <div class="banner-text">
@@ -167,7 +160,6 @@
         </div>
     </div>
 
-    <!-- Menú Inferior Flotante -->
     <div class="nav-bar">
         <button class="nav-item">💬</button>
         <button class="nav-item">📍</button>
