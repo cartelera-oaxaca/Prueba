@@ -1,110 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery El Punto</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background: #121212; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; }
-        .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; }
-        
-        /* Imagen principal */
-        .img-box { width: 100%; height: 220px; background: #222; border-radius: 10px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid #333; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Botón de Estado (Cerrado/Abierto) */
-        .btn-estado { padding: 12px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; text-align: center; transition: 0.2s; }
-        .cerrado { background: #d9534f; color: white; }
-        .abierto { background: #5cb85c; color: white; }
-
-        /* Botones de navegación */
-        .nav-btn { width: 100%; padding: 14px; background: #ff9800; color: #000; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; display: block; }
-        .nav-btn:active { background: #e68900; }
-
-        /* Botón WhatsApp */
-        .btn-wsp { width: 100%; padding: 14px; background: #25D366; color: #fff; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; display: block; }
-
-        /* Visor interno para no salir de la pantalla */
-        #visor-container { display: none; width: 100%; height: 450px; background: #fff; border-radius: 10px; overflow: hidden; position: relative; margin-top: 10px; }
-        #visor-container iframe { width: 100%; height: 100%; border: none; }
-        .cerrar-visor { position: absolute; top: 5px; right: 5px; background: #000; color: #fff; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; z-index: 10; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Delivery El Punto</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#121212;color:#fff;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px}
+.cnt{width:100%;max-width:400px;display:flex;flex-direction:column;gap:12px}
+.img-box{width:100%;height:220px;background:#222;border-radius:10px;overflow:hidden;position:relative;border:1px solid #333}
+.img-box img{width:100%;height:100%;object-fit:cover}
+.btn-wsp-flotante{position:absolute;bottom:10px;left:10px;right:10px;background:#25D366;color:#fff;padding:10px;border-radius:6px;text-align:center;font-weight:bold;text-decoration:none;font-size:14px;box-shadow:0 4px 10px rgba(0,0,0,0.5);z-index:5}
+.btn-est{padding:10px;font-size:14px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;text-align:center;user-select:none}
+.c-err{background:#d9534f;color:#fff}
+.c-ab{background:#5cb85c;color:#fff}
+.nav-btn{width:100%;padding:12px;background:#ff9800;color:#000;font-weight:bold;border:none;border-radius:8px;font-size:15px;cursor:pointer;text-align:center}
+#v-cnt{display:none;width:100%;height:480px;background:#fff;border-radius:10px;overflow:hidden;position:relative;margin-top:5px}
+#v-cnt iframe{width:100%;height:100%;border:none}
+.c-v{position:absolute;top:5px;right:5px;background:#000;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-weight:bold;cursor:pointer;z-index:10}
+</style>
 </head>
 <body>
+<div class="cnt">
+<h2 style="font-size:18px;">Delivery El Punto</h2>
 
-<div class="container">
-    <h2>Delivery El Punto</h2>
+<div class="img-box">
+<img id="imgA1" src="https://i.ibb.co/S7t5K5rF/26639.jpg" alt="Portada">
+<a class="btn-wsp-flotante" href="https://wa.me/525644276032?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank">💬 Chat Directo WhatsApp</a>
+</div>
 
-    <!-- Imagen A1 (Cargada por defecto desde tu estructura o la que tenías) -->
-    <div class="img-box">
-        <img id="imagenA1" src="https://i.ibb.co/S7t5K5rF/26639.jpg" alt="Banner Principal">
-    </div>
+<button id="bEst" class="btn-est c-err" ontouchstart="_t=setTimeout(_s,1000);" ontouchend="clearTimeout(_t);" onmousedown="_t=setTimeout(_s,1000);" onmouseup="clearTimeout(_t);">CERRADO</button>
 
-    <!-- Botón Estado (10 clicks para cambiar) -->
-    <button id="btnEstado" class="btn-estado cerrado" onclick="clicEstado()">CERRADO (Faltan 10 clics)</button>
+<button class="nav-btn" onclick="_v('https://cartelera-oaxaca.github.io/Coberturaelpunto/')">🗺️ Ver Cobertura</button>
+<button class="nav-btn" onclick="_v('https://super-delivery-elpunto.netlify.app/')">📦 Ver Catálogo</button>
 
-    <!-- Botón B1 (Cobertura) abre sin salir -->
-    <button class="nav-btn" onclick="abrirVisor('https://cartelera-oaxaca.github.io/Coberturaelpunto/')">🗺️ Ver Cobertura</button>
-
-    <!-- Botón C1 (Catálogo) abre sin salir -->
-    <button class="nav-btn" onclick="abrirVisor('https://super-delivery-elpunto.netlify.app/')">📦 Ver Catálogo</button>
-
-    <!-- Botón WhatsApp -->
-    <a class="btn-wsp" href="https://wa.me/525644276032?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank">💬 Chat Directo WhatsApp</a>
-
-    <!-- Visor interno -->
-    <div id="visor-container">
-        <button class="cerrar-visor" onclick="cerrarVisor()">✖ Cerrar</button>
-        <iframe id="marcoVisor" src=""></iframe>
-    </div>
+<div id="v-cnt">
+<button class="c-v" onclick="_cv()">✖ Cerrar</button>
+<iframe id="mF" src=""></iframe>
+</div>
 </div>
 
 <script>
-    // Lógica de los 10 clics para cambiar Abierto/Cerrado sin bugs
-    let clicks = 0;
-    let estadoAbierto = false;
-
-    function clicEstado() {
-        clicks++;
-        let faltan = 10 - clicks;
-        let btn = document.getElementById("btnEstado");
-
-        if (clicks >= 10) {
-            estadoAbierto = !estadoAbierto;
-            clicks = 0; 
-            if (estadoAbierto) {
-                btn.className = "btn-estado abierto";
-                btn.innerText = "ABIERTO (Click 10 veces para cerrar)";
-            } else {
-                btn.className = "btn-estado cerrado";
-                btn.innerText = "CERRADO ()";
-            }
-        } else {
-            if (estadoAbierto) {
-                btn.innerText = `ABIERTO (Faltan ${faltan} clics)`;
-            } else {
-                btn.innerText = `CERRADO (Faltan ${faltan} clics)`;
-            }
-        }
-    }
-
-    // Funciones para abrir enlaces sin salir de la pantalla en iframe
-    function abrirVisor(url) {
-        let visor = document.getElementById("visor-container");
-        let marco = document.getElementById("marcoVisor");
-        marco.src = url;
-        visor.style.display = "block";
-        visor.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function cerrarVisor() {
-        let visor = document.getElementById("visor-container");
-        let marco = document.getElementById("marcoVisor");
-        marco.src = "";
-        visor.style.display = "none";
-    }
+let _st=false,_t;
+function _s(){
+_st=!_st;
+let e=document.getElementById('bEst');
+if(_st){e.className="btn-est c-ab";e.innerText="ABIERTO";}
+else{e.className="btn-est c-err";e.innerText="CERRADO";}
+}
+function _v(u){
+let v=document.getElementById('v-cnt'),m=document.getElementById('mF');
+m.src=u;v.style.display="block";v.scrollIntoView({behavior:'smooth'});
+}
+function _cv(){
+let v=document.getElementById('v-cnt'),m=document.getElementById('mF');
+m.src="";v.style.display="none";
+}
 </script>
-
 </body>
 </html>
