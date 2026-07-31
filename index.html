@@ -1,170 +1,151 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Delivery Beer El Punto</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery El Punto</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{background:#090d16;color:#f8fafc;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:16px;padding-bottom:110px}
+.cnt{width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px}
+h2{font-size:20px;font-weight:700;text-align:center;letter-spacing:0.5px;color:#f1f5f9;margin-top:4px}
+.img-box{width:100%;height:75vh;background:#1e293b;border-radius:18px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.08);box-shadow:0 10px 25px -5px rgba(0,0,0,0.5)}
+.img-box img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.img-box:hover img{transform:scale(1.03)}
+.btn-wsp-flotante{position:absolute;bottom:14px;left:14px;right:14px;background:linear-gradient(135deg, #22c55e 0%, #16a34a 100%);color:#fff;padding:12px;border-radius:12px;text-align:center;font-weight:700;text-decoration:none;font-size:14px;box-shadow:0 6px 20px rgba(22,163,74,0.4);z-index:5;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);border:1px solid rgba(255,255,255,0.15)}
+.btn-wsp-flotante:active{transform:scale(0.97)}
+.btn-est{padding:14px;font-size:15px;font-weight:700;border:none;border-radius:14px;cursor:pointer;text-align:center;user-select:none;width:100%;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:all 0.3s ease;letter-spacing:1px}
+.c-err{background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;border:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 20px rgba(239,68,68,0.3)}
+.c-ab{background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 20px rgba(16,185,129,0.3)}
+.nav-sec{display:flex;flex-direction:column;gap:14px;width:100%}
 
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 35px; /* Sube los iconos todavía más para que no queden hasta abajo */
-        }
+/* Contenedor inferior flotante estilo Glassmorphism */
+.contenedor-botones-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(9, 13, 22, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+}
 
-        .top-bar {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            justify-content: flex-end;
-            padding: 15px 20px 5px 20px;
-        }
+/* Botones redondos de alta gama con relieve */
+.btn-redondo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-        .status-btn {
-            background-color: #10b981;
-            color: #ffffff;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
-        }
+.btn-redondo:active {
+    transform: scale(0.90);
+    box-shadow: 0 2px 10px rgba(217, 119, 6, 0.3);
+}
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .banner {
-            width: 100%;
-            max-width: 420px;
-            background: linear-gradient(135deg, #0d1b2a, #1b263b);
-            border-radius: 14px;
-            padding: 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
-            border: 1px solid #1f2937;
-        }
-
-        .banner-text h1 {
-            font-size: 26px;
-            font-weight: bold;
-            color: #ffffff;
-            font-style: italic;
-            line-height: 1.1;
-        }
-
-        .banner-text p {
-            font-size: 12px;
-            color: #b0c4de;
-            font-style: italic;
-            margin-top: 6px;
-        }
-
-        .banner-text span {
-            font-size: 10px;
-            color: #8a9ea8;
-            letter-spacing: 1px;
-            display: block;
-            margin-top: 6px;
-        }
-
-        .banner-icons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .icon-circle {
-            width: 38px;
-            height: 38px;
-            border: 1px solid #d4af37;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.4);
-            font-size: 16px;
-        }
-
-        .nav-bar {
-            width: 88%;
-            max-width: 380px;
-            background-color: #121212;
-            border: 1px solid #262626;
-            border-radius: 22px;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.9);
-            margin-bottom: 10px;
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-
-        .nav-item:active {
-            background-color: #2a2a2a;
-        }
-    </style>
+#v-cnt{display:none;width:100%;height:78vh;background:#1e293b;border-radius:18px;overflow:hidden;position:relative;margin-top:2px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 15px 35px rgba(0,0,0,0.6)}
+#v-cnt iframe{width:100%;height:100%;border:none}
+.c-v{position:absolute;top:10px;right:10px;background:rgba(15, 23, 42, 0.85);backdrop-filter:blur(8px);color:#fff;border:1px solid rgba(255,255,255,0.15);padding:8px 14px;border-radius:10px;font-weight:700;cursor:pointer;z-index:10;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:all 0.2s ease}
+.c-v:active{transform:scale(0.95)}
+</style>
 </head>
 <body>
+<div class="cnt">
+<h2>Delivery El Punto</h2>
 
-    <div class="top-bar">
-        <button class="status-btn">Abierto</button>
-    </div>
+<!-- Elementos que se ocultan al abrir un visor para dar espacio total -->
+<div id="panel-principal" class="nav-sec">
+<div class="img-box">
+<!-- La imagen lee directo de la variable configurada según tu Sheet -->
+<img id="imgA1" src="https://i.ibb.co/S7t5K5rF/26639.jpg" alt="Portada">
+<a class="btn-wsp-flotante" href="https://wa.me/525644276032?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank">💬 Chat Directo WhatsApp</a>
+</div>
 
-    <div class="container">
-        <div class="banner">
-            <div class="banner-text">
-                <h1>El Punto<br>delivery</h1>
-                <p>Tu Tiendita de la esquina online</p>
-                <span>COL. NUEVO MEXICO</span>
-            </div>
-            <div class="banner-icons">
-                <div class="icon-circle">🏬</div>
-                <div class="icon-circle">📦</div>
-                <div class="icon-circle">📍</div>
-            </div>
-        </div>
-    </div>
+<button id="bEst" class="btn-est c-err" ontouchstart="_t=setTimeout(_s,1000);" ontouchend="clearTimeout(_t);" onmousedown="_t=setTimeout(_s,1000);" onmouseup="clearTimeout(_t);">CERRADO</button>
+</div>
 
-    <div class="nav-bar">
-        <button class="nav-item">💬</button>
-        <button class="nav-item">📍</button>
-        <button class="nav-item">🛒</button>
-    </div>
+<!-- Visor en Pantalla Amplia -->
+<div id="v-cnt">
+<button class="c-v" onclick="_cv()">✖ Cerrar y Volver</button>
+<iframe id="mF" src=""></iframe>
+</div>
+</div>
 
+<!-- Botones redondos fijos en la parte inferior con toda la lógica intacta -->
+<div class="contenedor-botones-inferior">
+    <button class="btn-redondo" onclick="_v('cob')" title="Ver Cobertura">📶</button>
+    <button class="btn-redondo" onclick="_v('cat')" title="Ver Catálogo">🔆</button>
+</div>
+
+<script>
+// Configuración de URLs basada en tu estructura de datos (Hoja 1)
+const CONFIG = {
+    imagenPortada: "https://i.ibb.co/Sk9yp8C/26392.jpg", // Aquí puedes cambiar la URL de la imagen cuando gustes
+    urlCobertura: "https://cartelera-oaxaca.github.io/Coberturaelpunto/",
+    urlCatalogo: "https://super-delivery-elpunto.netlify.app/"
+};
+
+// Aplicar imagen de portada al cargar
+document.getElementById('imgA1').src = CONFIG.imagenPortada;
+
+// Cargar estado guardado para que no se borre al recargar
+let _st = localStorage.getItem('_estadoNegocio') === 'true';
+let _t;
+
+function actualizarUI() {
+    let e = document.getElementById('bEst');
+    if(_st){
+        e.className="btn-est c-ab";
+        e.innerText="ABIERTO";
+    } else {
+        e.className="btn-est c-err";
+        e.innerText="CERRADO";
+    }
+}
+actualizarUI();
+
+function _s(){
+    _st = !_st;
+    localStorage.setItem('_estadoNegocio', _st);
+    actualizarUI();
+}
+
+function _v(tipo){
+    let u = (tipo === 'cob') ? CONFIG.urlCobertura : CONFIG.urlCatalogo;
+    // Oculta portada y estado para dar espacio limpio al visor
+    document.getElementById('panel-principal').style.display = 'none';
+    let v = document.getElementById('v-cnt');
+    let m = document.getElementById('mF');
+    m.src = u;
+    v.style.display = "block";
+}
+
+function _cv(){
+    let v = document.getElementById('v-cnt');
+    let m = document.getElementById('mF');
+    m.src = "";
+    v.style.display = "none";
+    // Regresa la portada original
+    document.getElementById('panel-principal').style.display = 'flex';
+}
+</script>
 </body>
 </html>
